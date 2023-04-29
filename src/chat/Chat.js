@@ -1,10 +1,8 @@
-
 import friends from '../FriendProperties/friends';
 import imgRegnar from '../FriendProperties/images/Ragnar_Lothbrok.jpg'
 import SearchFriend from '../SearchFriend/SearchFriend';
 import {useState} from 'react';
 import FriendListResults from '../friendListResults/FriendLisTresults';
-import {BrowserRouter, Routes, Route, Link} from 'react-router-dom';
 
 import './chat.css';
 function Chat() {
@@ -34,11 +32,10 @@ function Chat() {
     </BrowserRouter> */
 
   return (
-    
+    <div id='chat' className='chatPage'>
+
     <div className="container col-12">
       <div className="left_side">
-      
-      
         {/* Define User information and options */}
         <div className="header">
           <div className="user_image">
@@ -191,6 +188,7 @@ function Chat() {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }

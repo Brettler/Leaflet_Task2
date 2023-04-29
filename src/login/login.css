@@ -1,10 +1,10 @@
-body {
-    display: flex;
+.loginPage {
+    display:flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     background: url("leafs.JPG");
-    margin: 0;
+    padding:10px;
 }
 
 form {
@@ -14,4 +14,8 @@ form {
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 5);
     width: 100%;
     max-width: 800px;
+}
+
+.login-link{
+    padding-right: 5px;
 }
