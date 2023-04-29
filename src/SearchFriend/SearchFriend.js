@@ -1,11 +1,15 @@
 import {useRef} from 'react';
 
+
+
+/* This function recive a function as an argument.*/
 function SearchFriend({doSearch}) {
-    {/* We initilaize the varaible with null.*/}
+
+    /* We initilaize the varaible with null.*/
     const searchBox = useRef(null);
 
     const search = function() {
-        {/* We send to the doSearch the value that the user type in the search input box.*/}
+        /* Because doSearch is a function we can send the value that the user type in the search input box.*/
         doSearch(searchBox.current.value)
     }
     
