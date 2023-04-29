@@ -1,11 +1,10 @@
-body {
+.registerPage {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: url("leafs.jpg");
+    background: url("leafs.JPG");
     margin:0px;
-    
 }
 
 form {
