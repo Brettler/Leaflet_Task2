@@ -1,38 +1,275 @@
-.App {
-  text-align: center;
+* {
+  font-family: 'Open Sans', sans-serif;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 30px;
   min-height: 100vh;
+  background: linear-gradient(rgb(172, 202, 161) 130px, wheat 130px, white 170%);
+}
+
+.container {
+  position: relative;
+  height: 80vh;
+  display: flex;
+  padding: 0px;
+  box-sizing: border-box;
+  border: 2px solid rgba(128, 128, 128, 0.5);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.container .left_side {
+  flex: 30%;
   display: flex;
   flex-direction: column;
+  /* Add a light gray border */
+  border-right: 2px solid rgb(192, 191, 191);
+}
+
+.container .right_side {
+  position: relative;
+  flex: 70%;
+  display: flex;
+  flex-direction: column;
+  background: wheat;
+}
+
+.container .right_side::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: url("leafs.JPG") no-repeat center center;
+  opacity: 0.2;
+  background-size: cover;
+
+}
+
+.header {
+  position: relative;
+  height: 75px;
+  background: rgb(226, 173, 93);
+  display: flex;
   align-items: center;
+  padding: 12px 15px;
+}
+
+.user_image {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  overflow: hidden;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.user_name {
+  padding-left: 10px;
+  flex: 1;
+  font-size: 0.8 em;
+  font-weight: 600;
+}
+
+.add_friend_icon {
+  margin-top: 20px;
+  /* Increase the font-size value to make the icon bigger */
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Search chat container */
+.search_chat {
+  position: relative;
+  background: gray;
+}
+
+/* Search input */
+.form-control {
+  /* Set padding-left to the width of the icon */
+  padding-left: 35px;
+}
+
+/* Search icon */
+#search_icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+}
+
+.chat_list {
+  background-color: white;
+  /* Add a scrollbar when needed */
+  overflow-y: auto;
+  padding-left: 0px;
+  margin-bottom: 0px;
+}
+
+.img_friend {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.friend_block {
+  display: flex;
+  padding: 6px 15px;
+  padding-bottom: 5px;
+  border-bottom: 2px solid rgb(192, 191, 191);
+  cursor: pointer;
+  align-items: center;
+}
+
+.details {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  margin-left: 15px;
+}
+
+.friend_name {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  font-size: 0.8 em;
+  font-weight: 600;
+}
+
+.time_date {
+  font-size: 0.75em;
+  font-weight: 600;
+  color: lightgray;
+  text-align: right;
+}
+
+.last_message {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.last_message p {
+  color: gray;
+  font-size: 0.9em;
+}
+
+num_messages {
+  font-weight: 600;
+  background: rgb(172, 202, 161);
+  color: rgb(65, 59, 59);
+  min-width: 40px;
+  height: 25px;
+  border-radius: 50%;
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  font-size: 0.85em;
 }
 
-.App-link {
-  color: #61dafb;
+.friend_block:hover {
+  background-color: rgb(245, 242, 242);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.user_name span {
+  font-weight: 500;
+  line-height: 1.2em;
+  font-size: 0.8em;
+  color: gray;
+}
+
+.chat_box {
+  flex-grow: 1;
+  overflow-y: auto;
+  position: relative;
+  bottom: 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+.message_container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  padding: 15px;
+}
+
+.chat_input_container {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-top: 1px solid rgb(192, 191, 191);
+  bottom: 0;
+  width: 100%;
+}
+
+.chat_input {
+  padding-left: 15px;
+}
+
+.send_button {
+  font-size: 1.1em;
+  margin: 0 5px;
+}
+
+.chat_icons {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-right: 5px;
+  padding-left: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.message {
+  max-width: 70%;
+  padding: 8px 15px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.my_message {
+  background-color: rgb(172, 202, 161);
+  align-self: flex-start;
+  position: relative;
+}
+
+.friend_message {
+  background-color: #f1f1f1;
+  align-self: flex-end;
+  position: relative;
+}
+
+.message_time {
+  position: absolute;
+  font-size: 10px;
+  color: gray;
+}
+
+.my_message .message_time {
+  bottom: -15px;
+  left: 15px;
+}
+
+.friend_message .message_time {
+  bottom: -15px;
+  right: 15px;
 }
