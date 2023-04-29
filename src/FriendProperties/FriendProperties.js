@@ -4,7 +4,7 @@ function FriendProperties( friend ) {
     return(
         <li className="friend_block">
         <div className="img_friend">
-          <img src={friend.img} className="cover" />
+          <img src={friend.img} className="cover" alt="" />
         </div>
         <div className="details">
           <div className="friend_name">
