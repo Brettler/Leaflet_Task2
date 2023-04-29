@@ -5,7 +5,7 @@ import imgUnderwood from './images/Frank_Underwood.jpg'
 import imgHouse from './images/Gregory_House.jpg'
 import imgSeinfeld from './images/Jerry_Seinfeld.png'
 import imgRick from './images/Rick_Sanchez.jpg'
-{/* Define Object that will contain the freind block parameter */ }
+/* Define Object that will contain the freind block parameter */
 const friends = [{ img: imgRegnar, name: 'Ragnar Lothbrok', day_time: '13:53 30/04/2023', last_msg: 'WHO WANTS TO BE KING??!!!' },
                 { img: imgLitt, name: 'Louis Litt', day_time: '6:00 19/04/2023', last_msg: 'You just got Litt up!!', num_msg: '217' },
                 { img: imgEleanor, name: 'Eleanor_Shellstrop', day_time: '2:49 21/10/2021', last_msg: "This is the Bad Place isn't it...", num_msg: '6' },

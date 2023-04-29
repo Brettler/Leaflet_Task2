@@ -2,29 +2,48 @@ import './App.css';
 import friends from './FriendProperties/friends';
 import imgRegnar from './FriendProperties/images/Ragnar_Lothbrok.jpg'
 import SearchFriend from './SearchFriend/SearchFriend';
-import { useState } from 'react';
+import {useState} from 'react';
 import FriendListResults from './friendListResults/FriendLisTresults';
+
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
 
 function App() {
 
-  {/*Create hook named state.
+  /*Create hook named state.
     As a deafult input we will be all the friends the user have.
     setSearchQuery- will set the changes in the searchBox - Setter.
-    The update of the current state is searchQuery - Getter. */}
+    The update of the current state is searchQuery - Getter. */
+    
   const [friendList, setFriendList] = useState(friends);
-
+  
+   /* The function recive query (the input in the search box) */
   const doSearch = function (q) {
-    setFriendList(friends.filter((friend) => friend.name.includes(q)));
+    /* Give the setter as an input the friends list of the user.
+      Filter the list of friends such that check each friend in freinds if he true or false.
+      True will be if the friend name include the string 'q' otherwise false.
+      Such that only friends with the input string will stay. 
+      Finally we update the friendList with the setter setFriendList.
+      When the friendList is updated it cause the App function to be called again and it will return the HTML we the updated friends list.*/
+    setFriendList(friends.filter((friend) => friend.name.toLowerCase().startsWith(q.toLowerCase())));
   }
 
-
+  /* <BrowserRouter>
+      <Routes>
+        <Route path="/details" element={ }></Route>
+        <Route path="/" element={ }></Route>
+      </Routes>
+    </BrowserRouter> */
+    
   return (
+    
     <div className="container col-12">
       <div className="left_side">
+      
+
         {/* Define User information and options */}
         <div className="header">
           <div className="user_image">
-            <img src="fall.JPG" className="cover" />
+            <img src="fall.JPG" className="cover" alt=""/>
           </div>
           <div id="name" className="user_name">
             Ashleaf Maple
@@ -57,6 +76,8 @@ function App() {
           </div>
         </div>
         {/* Define the search chat bar */}
+        {/* Passing to SearchFriend the variable doSearch ->
+          doSearch is type function */}
         <SearchFriend doSearch={doSearch}/>
 
 
@@ -74,7 +95,7 @@ function App() {
         {/* Information of the user we are currently chatting with */}
         <div className="header">
           <div className="user_image">
-            <img src={imgRegnar} className="cover" />
+            <img src={imgRegnar} className="cover" alt=""/>
           </div>
           <div className="user_name">
             Ragnar Lothbrok<br />
