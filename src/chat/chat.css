@@ -195,12 +195,14 @@ num_messages {
   color: gray;
 }
 
+
 .chat_box {
   flex-grow: 1;
   overflow-y: auto;
   position: relative;
   bottom: 0px;
   display: flex;
+  min-width: 100%;
   flex-direction: column;
 }
 
@@ -212,14 +214,7 @@ num_messages {
   padding: 15px;
 }
 
-.chat_input_container {
-  display: flex;
-  align-items: center;
-  background-color: white;
-  border-top: 1px solid rgb(192, 191, 191);
-  bottom: 0;
-  width: 100%;
-}
+
 
 .chat_input {
   padding-left: 15px;
@@ -238,6 +233,20 @@ num_messages {
   padding-left: 10px;
   font-size: 20px;
   cursor: pointer;
+}
+
+.chat_input_container {
+  
+ 
+ 
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-top: 1px solid rgb(192, 191, 191);
+
+  width: 100%;
 }
 
 .message {

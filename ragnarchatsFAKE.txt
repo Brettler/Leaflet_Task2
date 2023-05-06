@@ -1,0 +1,72 @@
+{/* My message */}
+                <div className="message my_message">
+                    Hey man, when will you be coming back to Kattegat?
+                    <div className="message_time">13:45</div>
+                </div>
+                {/* Friend message */}
+                <div className="message friend_message">
+                    You'll be seeing me soon enough
+                    <div className="message_time">13:46</div>
+                </div>
+                {/* My message */}
+                <div className="message my_message">
+                    What will you tell your people?
+                    <div className="message_time">13:46</div>
+                </div>
+                {/* Friend message */}
+                <div className="message friend_message">
+                    That their king is back
+                    <div className="message_time">13:47</div>
+                </div>
+                {/* My message */}
+                <div className="message my_message">
+                    You're gonna need something stronger than that...
+                    <div className="message_time">13:48</div>
+                </div>
+                {/* My message */}
+                <div className="message my_message">
+                    Some people don't recognize you as king
+                    <div className="message_time">13:48</div>
+                </div>
+                {/* Friend message */}
+                <div className="message friend_message">
+                    How's this: <br />
+                    It appears my return is not welcome.
+                    You've obviously all made your mind up about me.
+                    I cannot blame you for that. <br />
+                    So.. Who's gonna do it than?
+                    <div className="message_time">13:51</div>
+                </div>
+                {/* Friend message */}
+                <div className="message friend_message">
+                    Who's gonna kill me?
+                    <div className="message_time">13:51</div>
+                </div>
+                {/* Friend message */}
+                <div className="message friend_message">
+                    Well I don't mind. Go ahead. Please... <br />
+                    Look at these people!
+                    They no longer support me! LOOK!
+                    Why would they?!?
+                    I am your leader! AnD I jUsT lEfT.
+                    What kind of leader does that huh?!
+                    <div className="message_time">13:52</div>
+                </div>
+                {/* Friend message */}
+                <div className="message friend_message">
+                    WHAT KIND OF KING ABANDONS HIS PEOPLE?!!
+                    What kind of father, abandons his sons.
+                    <div className="message_time">13:52</div>
+                </div>
+                {/* Friend message */}
+                <div className="message friend_message">
+                    So who wants to be king? <br />
+                    OH YOU KNOW HOW THIS WORKS!
+                    If you want to be king - you must kill me.
+                    <div className="message_time">13:53</div>
+                </div>
+                {/* Friend message */}
+                <div className="message friend_message">
+                    WHO WANTS TO BE KING??!!!
+                    <div className="message_time">13:53</div>
+                </div>
