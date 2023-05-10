@@ -1,42 +1,39 @@
 import RegUsername from "./RegUsername";
 import RegPassword from "./regPassword/RegPassword";
 import RegDisplayName from "./RegDisplayName";
-import RegImg from "./RegImg";
+import RegImg from "./regImg/RegImg";
 import { useState } from 'react';
 import CheckPassword from "./regPassword/CheckPassword";
+import defaultPic from './regImg/DefaultProfilePIC.png'
 
 
-function RegisterInfo() {
+function RegisterInfo({properties, setProperties}) {
     const [isValid, setIsValid] = useState("");
-    const [password, setPassword] = useState("");
-    const [verifyPassword, setVerifyPassword] = useState("");
+    const [errorMsg, setErrorMsg] = useState("");
+
 
     const validPassword = (e) => {
-        console.log("Hi fofoffoof!!!!")
         const value = e.target.value;
-        setPassword(value);
+        setProperties({...properties, registerPassword: value});
         setIsValid(CheckPassword(value));
     };
 
     const validVerifyPassword = (e) => {
         const value = e.target.value;
-        setVerifyPassword(value);
-        console.log(verifyPassword);
-        if (verifyPassword !== password) {
-            setVerifyPassword("Passwords do not match");
+
+        if (value !== properties.registerPassword) {
+            setErrorMsg("Passwords do not match");
         } else {
-            setVerifyPassword("")
+            setErrorMsg("");
         }
     };
 
     return (
         <>
-            <RegUsername />
-            <RegPassword validPassword={validPassword} validVerifyPassword={validVerifyPassword}/>
-            <p>{isValid}</p>
-            <p>{verifyPassword}</p>
-            <RegDisplayName />
-            <RegImg />
+            <RegUsername registerUsername={properties.registerUsername} setRegisterUsername={(value) => setProperties({...properties, registerUsername: value})} />
+            <RegPassword validPassword={validPassword} validVerifyPassword={validVerifyPassword} isValid={isValid} errorMsg={errorMsg}/>
+            <RegDisplayName registerDisplayName={properties.registerDisplayName} setRegisterDisplayName={(value) => setProperties({...properties, registerDisplayName: value})}/>
+            <RegImg registerImage={properties.registerImage} setRegisterImage={(value) => setProperties({...properties, registerImage: value})}/>
         </>
     );
 }

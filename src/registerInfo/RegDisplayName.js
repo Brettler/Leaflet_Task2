@@ -1,6 +1,6 @@
 
 
-function RegDisplayName() {
+function RegDisplayName({ registerDisplayName, setRegisterDisplayName }) {
 
     return (
         <div className="row mb-3">
@@ -8,7 +8,8 @@ function RegDisplayName() {
                 Display Name
             </label>
             <div className="col-sm-10">
-                <input type="text" className="form-control" id="inputName" />
+                <input type="text" className="form-control" id="inputName" value={registerDisplayName}
+                       onChange={(e) => setRegisterDisplayName(e.target.value)}/>
             </div>
         </div>
     );
