@@ -1,20 +1,21 @@
 import LoginButtons from '../loginButtons/LoginButtons';
 import LoginInfo from '../loginInfo/LoginInfo';
-import usersRegisterList from "../registerInfo/UsersRegisterList";
 import { useState } from 'react';
 import './login.css'
 
 /* This function recive a function as an argument.*/
-function Login({setUserValidInfo}) {
+function Login({setUserValidInfo, usersRegisterList, setIsLoggedIn}) {
     const [loginUsername, setLoginUsername] = useState("");
     const [loginPassword, setLoginPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState(false);
 
-    const loginUser = () => {
+    const loginUser = (e) => {
+        e.preventDefault();
         const user = usersRegisterList.find(
-            (user) => user.username === loginUsername && user.password === loginPassword);
+            (user) => user.registerUsername === loginUsername && user.registerPassword === loginPassword);
         if (user) {
             setUserValidInfo(user);
+            setIsLoggedIn(true);
         } else {
             // Handle incorrect username/password
             setErrorMessage(true);
