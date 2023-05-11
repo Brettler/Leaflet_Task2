@@ -5,16 +5,9 @@ import Login from './login/Login';
 import Register from './register/Register';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
-
 function App() {
     const [userValidInfo, setUserValidInfo] = useState(null);
     const [usersRegisterList, setUsersRegisterList] = useState([]);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-    // Render the Login component with the setUser prop
-    const renderLogin = () => {
-        return <Login setUserValidInfo={setUserValidInfo} usersRegisterList={usersRegisterList} setIsLoggedIn={setIsLoggedIn}/>;
-    };
 
     // Render the Chat component only if the user is authenticated
     const renderChat = () => {
@@ -26,15 +19,15 @@ function App() {
         }
     };
 
+
     return (
         <BrowserRouter>
             <Routes>
                 <Route path="/chat" element={renderChat()} />
-                <Route path="/register" element={<Register setUsersRegisterList={setUsersRegisterList} usersRegisterList={usersRegisterList}/>} />
-                <Route path="/" element={renderLogin()} />
+                <Route path="/register" element={<Register setUsersRegisterList={setUsersRegisterList} usersRegisterList={usersRegisterList}/>}/>
+                <Route path="/" element={<Login setUserValidInfo={setUserValidInfo} usersRegisterList={usersRegisterList}/>} />
             </Routes>
         </BrowserRouter>
     );
 }
-
 export default App;
