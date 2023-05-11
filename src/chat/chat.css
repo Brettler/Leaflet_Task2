@@ -1,10 +1,10 @@
+
 .chatPage {
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0px 30px;
   min-height: 100vh;
-  
 }
 
 * {
@@ -70,15 +70,19 @@
 .user_name {
   padding-left: 10px;
   flex: 1;
-  font-size: 0.8 em;
+  font-size: 0.8 rem;
   font-weight: 600;
 }
 
-.add_friend_icon {
+.icons {
   margin-top: 20px;
   /* Increase the font-size value to make the icon bigger */
   font-size: 30px;
   cursor: pointer;
+}
+
+.bi {
+  padding-left: 10px;
 }
 
 .cover {
@@ -96,16 +100,9 @@
   background: gray;
 }
 
-/* Search input */
-.form-control {
-  /* Set padding-left to the width of the icon */
-  padding-left: 35px;
-}
-
 /* Search icon */
 #search_icon {
   position: absolute;
-  left: 10px;
   top: 50%;
   transform: translateY(-50%);
   font-size: 20px;
@@ -151,6 +148,10 @@
   margin-bottom: 5px;
   font-size: 0.8 em;
   font-weight: 600;
+}
+
+#add-friend {
+  margin: 0;
 }
 
 .time_date {
@@ -214,8 +215,6 @@ num_messages {
   padding: 15px;
 }
 
-
-
 .chat_input {
   padding-left: 15px;
 }
@@ -236,16 +235,11 @@ num_messages {
 }
 
 .chat_input_container {
-  
- 
- 
   position: relative;
-
   display: flex;
   align-items: center;
   background-color: white;
   border-top: 1px solid rgb(192, 191, 191);
-
   width: 100%;
 }
 
@@ -283,3 +277,9 @@ num_messages {
   bottom: -15px;
   right: 15px;
 }
+
+.form-control {
+  border-radius: unset;
+  padding-left: 40px;
+}
+
