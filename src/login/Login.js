@@ -1,25 +1,33 @@
 import LoginButtons from '../loginButtons/LoginButtons';
 import LoginInfo from '../loginInfo/LoginInfo';
 import { useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import './login.css'
 
 /* This function recive a function as an argument.*/
-function Login({setUserValidInfo, usersRegisterList, setIsLoggedIn}) {
+function Login({setUserValidInfo, usersRegisterList}) {
     const [loginUsername, setLoginUsername] = useState("");
     const [loginPassword, setLoginPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState(false);
+    const [redirectToChat, setRedirectToChat] = useState(false);
 
-    const loginUser = () => {
+    const loginUser = (e) => {
+        e.preventDefault();
         const user = usersRegisterList.find(
             (user) => user.registerUsername === loginUsername && user.registerPassword === loginPassword);
         if (user) {
             setUserValidInfo(user);
-            setIsLoggedIn(true);
+            setRedirectToChat(true);
         } else {
             // Handle incorrect username/password
             setErrorMessage(true);
         }
     };
+    // Redirect to chat if redirectToChat is true
+    if (redirectToChat) {
+        return <Navigate to="/chat" />;
+    }
+
     const clearErrorMessage = () => {
         setErrorMessage(false);
     };
@@ -27,11 +35,7 @@ function Login({setUserValidInfo, usersRegisterList, setIsLoggedIn}) {
     return (
         <div id='login' className='loginPage'>
             <form>
-                {errorMessage && (
-                    <div className="alert alert-danger" role="alert">
-                        Invalid username or password, please try again
-                    </div>
-                )}
+
 
                 <LoginInfo
                     loginUsername={loginUsername}
@@ -40,6 +44,11 @@ function Login({setUserValidInfo, usersRegisterList, setIsLoggedIn}) {
                     setLoginPassword={setLoginPassword}
                     clearErrorMessage={clearErrorMessage}
                 />
+                {errorMessage && (
+                    <div className="alert alert-danger" role="alert">
+                        Invalid username or password, please try again
+                    </div>
+                )}
                 <LoginButtons loginUser={loginUser} />
             </form>
         </div>

@@ -2,38 +2,59 @@ import RegUsername from "./RegUsername";
 import RegPassword from "./regPassword/RegPassword";
 import RegDisplayName from "./RegDisplayName";
 import RegImg from "./regImg/RegImg";
-import { useState } from 'react';
 import CheckPassword from "./regPassword/CheckPassword";
-import defaultPic from './regImg/DefaultProfilePIC.png'
 
+function RegisterInfo({properties, setProperties,
+                          usersRegisterList,regErrorPasswordMSG,
+                          setRegErrorPasswordMSG,
+                          regErrorVerifyPasswordMSG, setRegErrorVerifyPasswordMSG,
+                          usernameErrorMsg, setUsernameErrorMsg}) {
 
-function RegisterInfo({properties, setProperties}) {
-    const [isValid, setIsValid] = useState("");
-    const [errorMsg, setErrorMsg] = useState("");
-
+    const validUsername = (value) => {
+        const userExists = usersRegisterList.filter(user => user.registerUsername.toLowerCase() === value.toLowerCase()).length > 0;
+        if(userExists) {
+            setUsernameErrorMsg("This username is already taken");
+        } else {
+            setUsernameErrorMsg("");
+        }
+        setProperties({...properties, registerUsername: value});
+    };
 
     const validPassword = (e) => {
         const value = e.target.value;
+        const passwordErrorMsg = CheckPassword(value)
         setProperties({...properties, registerPassword: value});
-        setIsValid(CheckPassword(value));
+        if (passwordErrorMsg !== "") {
+            setRegErrorPasswordMSG(passwordErrorMsg);
+        } else {
+            setRegErrorPasswordMSG("");
+        }
+
     };
 
     const validVerifyPassword = (e) => {
         const value = e.target.value;
 
         if (value !== properties.registerPassword) {
-            setErrorMsg("Passwords do not match");
+            setRegErrorVerifyPasswordMSG("Passwords do not match");
         } else {
-            setErrorMsg("");
+            setRegErrorVerifyPasswordMSG("");
         }
     };
 
     return (
         <>
-            <RegUsername registerUsername={properties.registerUsername} setRegisterUsername={(value) => setProperties({...properties, registerUsername: value})} />
-            <RegPassword validPassword={validPassword} validVerifyPassword={validVerifyPassword} isValid={isValid} errorMsg={errorMsg}/>
-            <RegDisplayName registerDisplayName={properties.registerDisplayName} setRegisterDisplayName={(value) => setProperties({...properties, registerDisplayName: value})}/>
-            <RegImg registerImage={properties.registerImage} setRegisterImage={(value) => setProperties({...properties, registerImage: value})}/>
+            <RegUsername registerUsername={properties.registerUsername}
+                         setRegisterUsername={validUsername}
+                         usernameErrorMsg={usernameErrorMsg} />
+            <RegPassword validPassword={validPassword}
+                         validVerifyPassword={validVerifyPassword}
+                         regErrorPasswordMSG={regErrorPasswordMSG}
+                         regErrorVerifyPasswordMSG={regErrorVerifyPasswordMSG}/>
+            <RegDisplayName registerDisplayName={properties.registerDisplayName}
+                            setRegisterDisplayName={(value) => setProperties({...properties, registerDisplayName: value})}/>
+            <RegImg registerImage={properties.registerImage}
+                    setRegisterImage={(value) => setProperties({...properties, registerImage: value})}/>
         </>
     );
 }

@@ -1,5 +1,5 @@
 
-function RegPassword({ validPassword, validVerifyPassword, isValid, errorMsg}) {
+function RegPassword({ validPassword, validVerifyPassword, regErrorPasswordMSG, regErrorVerifyPasswordMSG}) {
 
     return (
         <>
@@ -7,7 +7,12 @@ function RegPassword({ validPassword, validVerifyPassword, isValid, errorMsg}) {
                 <label htmlFor="inputPassword3" className="col-sm-2 col-form-label">Password</label>
                 <div className="col-sm-10">
                     <input type="password" className="form-control" id="inputPassword3" onChange={validPassword}/>
-                    {isValid}
+                    {regErrorPasswordMSG
+                        && (
+                            <div className="alert alert-danger" role="alert">
+                                {regErrorPasswordMSG}
+                            </div>
+                        )}
                 </div>
             </div>
             <div className="row mb-3">
@@ -16,7 +21,11 @@ function RegPassword({ validPassword, validVerifyPassword, isValid, errorMsg}) {
                 </label>
                 <div className="col-sm-10">
                     <input type="password" className="form-control" id="inputPassword4" onChange={validVerifyPassword}/>
-                    {errorMsg}
+                    {regErrorVerifyPasswordMSG && (
+                    <div className="alert alert-danger" role="alert">
+                        {regErrorVerifyPasswordMSG}
+                    </div>
+                    )}
                 </div>
             </div>
         </>
