@@ -9,8 +9,7 @@ function Login({setUserValidInfo, usersRegisterList, setIsLoggedIn}) {
     const [loginPassword, setLoginPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState(false);
 
-    const loginUser = (e) => {
-        e.preventDefault();
+    const loginUser = () => {
         const user = usersRegisterList.find(
             (user) => user.registerUsername === loginUsername && user.registerPassword === loginPassword);
         if (user) {
