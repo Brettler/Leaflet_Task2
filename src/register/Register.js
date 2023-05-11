@@ -2,11 +2,10 @@ import RegisterButtons from '../registerButtons/RegisterButtons';
 import RegisterInfo from '../registerInfo/RegisterInfo';
 import './register.css'
 import { useState } from 'react';
-import usersRegisterList from "../registerInfo/UsersRegisterList";
 import {registerProperties} from '../registerInfo/RegProperties'
 
 /* This function recive a function as an argument.*/
-function Register({ setUsersRegisterList }) {
+function Register({ setUsersRegisterList, usersRegisterList }) {
     const [properties, setProperties] = useState(registerProperties);
 
 
@@ -17,8 +16,11 @@ function Register({ setUsersRegisterList }) {
             registerDisplayName: properties.registerDisplayName,
             registerImage: properties.registerImage,
         };
-        setUsersRegisterList(prevUsers => [...prevUsers, userInfo]);
-        console.log('usersRegisterList:', usersRegisterList);
+        setUsersRegisterList(prevUsers => {
+            const updatedUsers = [...prevUsers, userInfo];
+            console.log('Updated usersRegisterList:', updatedUsers);
+            return updatedUsers;
+        });
     };
 
 
