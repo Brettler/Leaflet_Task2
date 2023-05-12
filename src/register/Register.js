@@ -5,8 +5,13 @@ import { useState } from 'react';
 import {registerProperties} from '../registerInfo/RegProperties'
 import { Navigate } from 'react-router-dom';
 
-
-/* This function recive a function as an argument.*/
+/* The Register page logic encompasses all essential fields for a new user to complete their registration. These
+* mandatory fields comprise the username, password, verify password, and display name. Additionally, there is an
+* optional field for uploading a profile picture, which will be displayed to the user upon successful upload. In case
+* the user opts not to upload a picture, a default image will be assigned to them. At the bottom of the page, there is
+* a Register button that can be clicked after filling in all mandatory fields and a link to the Login page for users
+* who have already signed up.
+ */
 function Register({ setUsersRegisterList, usersRegisterList }) {
     const [properties, setProperties] = useState(registerProperties);
     const [errorMessage, setErrorMessage] = useState("");
@@ -15,20 +20,20 @@ function Register({ setUsersRegisterList, usersRegisterList }) {
     const [regErrorVerifyPasswordMSG, setRegErrorVerifyPasswordMSG] = useState("");
     const [usernameErrorMsg, setUsernameErrorMsg] = useState("");
 
+    // Create a user object that holds all the relevant information about the user.
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Creating an user object that contain all the information we need.
         const userInfo = {
             registerUsername: properties.registerUsername,
             registerPassword: properties.registerPassword,
             registerDisplayName: properties.registerDisplayName,
             registerImage: properties.registerImage,
-            chatHistory: {}, // chatHistory object will later store the chat history with each friend.
-            friendsList: [], // friendList array will later store the list of friends of the user.
+            chatHistory: {},
+            friendsList: [],
             friendsInfo: {},
         };
 
-        // Validate user inputs
+        // Ensure that all required fields have been completed..
         if (!userInfo.registerUsername || !userInfo.registerPassword || !userInfo.registerDisplayName) {
             setErrorMessage('Please fill out all fields');
             return;
@@ -37,6 +42,7 @@ function Register({ setUsersRegisterList, usersRegisterList }) {
             return;
         }
 
+        // Update the list of registered users..
         setUsersRegisterList(prevUsers => {
             const updatedUsers = {...prevUsers};
             updatedUsers[userInfo.registerUsername] = userInfo;
@@ -46,8 +52,8 @@ function Register({ setUsersRegisterList, usersRegisterList }) {
         })
     };
 
+    // Redirect to the Login page once registration is complete.
     const handlError = function () {
-        // Redirect to login if registration is successful
         if (redirectToLogin) {
             return <Navigate to="/" />;
         } else {
@@ -61,11 +67,10 @@ function Register({ setUsersRegisterList, usersRegisterList }) {
         }
     }
 
-
+    // Register page structure.
     return (
         <div id='register' className='registerPage'>
             <form className="col-12">
-
                 <RegisterInfo properties={properties}
                               setProperties={setProperties}
                               usersRegisterList={usersRegisterList}
@@ -75,11 +80,10 @@ function Register({ setUsersRegisterList, usersRegisterList }) {
                               setRegErrorVerifyPasswordMSG={setRegErrorVerifyPasswordMSG}
                               usernameErrorMsg={usernameErrorMsg}
                               setUsernameErrorMsg={setUsernameErrorMsg}
-                              handleSubmit={handleSubmit}/>
-
+                              handleSubmit={handleSubmit}
+                />
                 <RegisterButtons handleSubmit={handleSubmit}/>
                 {handlError()}
-
             </form>
         </div>
     );

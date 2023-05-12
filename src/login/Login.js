@@ -4,13 +4,18 @@ import {useState} from 'react';
 import {Navigate} from 'react-router-dom';
 import './login.css'
 
-/* This function receive a function as an argument.*/
+/* The logic of the Login page involves two input fields for the user to enter their username and password,
+* as well as two buttons for either signing in or being redirected to the register page. When the user inputs a valid
+* username and password, clicking on the login button will take them to their chat page. If the username or password
+* is invalid, an error message will be displayed. In case the user is not yet registered, they can click on the register
+* button to create a new account. */
 function Login({setUserValidInfo, usersRegisterList}) {
     const [loginUsername, setLoginUsername] = useState("");
     const [loginPassword, setLoginPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState(false);
     const [redirectToChat, setRedirectToChat] = useState(false);
 
+    // Verify whether the entered username and password correspond with each other.
     const loginUser = (e) => {
         e.preventDefault();
         const user = usersRegisterList[loginUsername]
@@ -18,19 +23,19 @@ function Login({setUserValidInfo, usersRegisterList}) {
             setUserValidInfo(user.registerUsername);
             setRedirectToChat(true);
         } else {
-            // Handle incorrect username/password
             setErrorMessage(true);
         }
     };
-    // Redirect to chat if redirectToChat is true
+    // Redirect to chat page if the username and password match.
     if (redirectToChat) {
         return <Navigate to="/chat"/>;
     }
 
     const clearErrorMessage = () => {
         setErrorMessage(false);
-    };
+    }
 
+    // Login page structure.
     return (
         <div id='login' className='loginPage'>
             <form>

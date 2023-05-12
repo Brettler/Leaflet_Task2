@@ -1,5 +1,7 @@
 import {Link} from 'react-router-dom';
 
+/* The Login page contains two buttons - one that directs to the Chats page, and the other that directs to the
+* Register page. */
 function LoginButtons({loginUser}) {
     return (
         <>
