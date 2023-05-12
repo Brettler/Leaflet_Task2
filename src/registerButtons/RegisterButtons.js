@@ -1,19 +1,16 @@
+import {Link} from 'react-router-dom';
 
-import { Link } from 'react-router-dom';
-
-function RegisterButtons({ handleSubmit }) {
+/* The Register page features two buttons - one that navigates to the Login page, and the other that registers the user
+* before redirecting them to the Login page. */
+function RegisterButtons({handleSubmit}) {
     return (
-
         <div>
-            {/* Move to the login page to fill up the properties to log to the app*/}
             <Link to='/' onClick={handleSubmit} className="btn btn-success">{'Register'}</Link>
             <span id="reg-to-login" className="login-link">
-                    {"Already registered? "}
-                {/* Move to the login page*/}
+                {"Already registered? "}
                 <Link to='/'>{'Login here'}</Link>
-                </span>
+            </span>
         </div>
-
     );
 }
 
