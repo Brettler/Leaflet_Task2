@@ -1,10 +1,10 @@
 import LoginButtons from '../loginButtons/LoginButtons';
 import LoginInfo from '../loginInfo/LoginInfo';
-import { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import {useState} from 'react';
+import {Navigate} from 'react-router-dom';
 import './login.css'
 
-/* This function recive a function as an argument.*/
+/* This function receive a function as an argument.*/
 function Login({setUserValidInfo, usersRegisterList}) {
     const [loginUsername, setLoginUsername] = useState("");
     const [loginPassword, setLoginPassword] = useState("");
@@ -13,10 +13,9 @@ function Login({setUserValidInfo, usersRegisterList}) {
 
     const loginUser = (e) => {
         e.preventDefault();
-        const user = usersRegisterList.find(
-            (user) => user.registerUsername === loginUsername && user.registerPassword === loginPassword);
-        if (user) {
-            setUserValidInfo(user);
+        const user = usersRegisterList[loginUsername]
+        if (user && user.registerPassword === loginPassword) {
+            setUserValidInfo(user.registerUsername);
             setRedirectToChat(true);
         } else {
             // Handle incorrect username/password
@@ -25,7 +24,7 @@ function Login({setUserValidInfo, usersRegisterList}) {
     };
     // Redirect to chat if redirectToChat is true
     if (redirectToChat) {
-        return <Navigate to="/chat" />;
+        return <Navigate to="/chat"/>;
     }
 
     const clearErrorMessage = () => {
@@ -35,8 +34,6 @@ function Login({setUserValidInfo, usersRegisterList}) {
     return (
         <div id='login' className='loginPage'>
             <form>
-
-
                 <LoginInfo
                     loginUsername={loginUsername}
                     setLoginUsername={setLoginUsername}
@@ -49,9 +46,10 @@ function Login({setUserValidInfo, usersRegisterList}) {
                         Invalid username or password, please try again
                     </div>
                 )}
-                <LoginButtons loginUser={loginUser} />
+                <LoginButtons loginUser={loginUser}/>
             </form>
         </div>
     );
 }
+
 export default Login;

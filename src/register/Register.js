@@ -4,23 +4,27 @@ import './register.css'
 import { useState } from 'react';
 import {registerProperties} from '../registerInfo/RegProperties'
 import { Navigate } from 'react-router-dom';
+
+
 /* This function recive a function as an argument.*/
 function Register({ setUsersRegisterList, usersRegisterList }) {
     const [properties, setProperties] = useState(registerProperties);
     const [errorMessage, setErrorMessage] = useState("");
     const [redirectToLogin, setRedirectToLogin] = useState(false);
-
     const [regErrorPasswordMSG, setRegErrorPasswordMSG] = useState("");
     const [regErrorVerifyPasswordMSG, setRegErrorVerifyPasswordMSG] = useState("");
     const [usernameErrorMsg, setUsernameErrorMsg] = useState("");
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        // Creating an user object that contain all the information we need.
         const userInfo = {
             registerUsername: properties.registerUsername,
             registerPassword: properties.registerPassword,
             registerDisplayName: properties.registerDisplayName,
             registerImage: properties.registerImage,
+            chatHistory: {}, // chatHistory object will later store the chat history with each friend.
+            friendsList: [], // friendList array will later store the list of friends of the user.
         };
 
         // Validate user inputs
@@ -33,7 +37,8 @@ function Register({ setUsersRegisterList, usersRegisterList }) {
         }
 
         setUsersRegisterList(prevUsers => {
-            const updatedUsers = [...prevUsers, userInfo];
+            const updatedUsers = {...prevUsers};
+            updatedUsers[userInfo.registerUsername] = userInfo;
             console.log('Updated usersRegisterList:', updatedUsers);
             setRedirectToLogin(true);
             return updatedUsers;
