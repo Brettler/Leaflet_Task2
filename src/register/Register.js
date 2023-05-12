@@ -77,7 +77,7 @@ function Register({ setUsersRegisterList, usersRegisterList }) {
                               handleSubmit={handleSubmit}/>
 
                 <RegisterButtons handleSubmit={handleSubmit}/>
-                {handlError()};
+                {handlError()}
 
             </form>
         </div>

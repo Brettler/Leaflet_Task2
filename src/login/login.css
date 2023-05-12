@@ -16,6 +16,23 @@ form {
     max-width: 800px;
 }
 
+.btn-group {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    width: 90%;
+}
+
 .login-link{
     padding-right: 5px;
+}
+
+.login-pair-btn {
+    margin-left: 4px;
+}
+
+#login-error {
+    margin-bottom: 15px;
+    margin-top: 0;
+    margin-left: 127px;
 }

@@ -42,7 +42,7 @@ function Login({setUserValidInfo, usersRegisterList}) {
                     clearErrorMessage={clearErrorMessage}
                 />
                 {errorMessage && (
-                    <div className="alert alert-danger" role="alert">
+                    <div id="login-error" className="alert alert-danger" role="alert">
                         Invalid username or password, please try again
                     </div>
                 )}
