@@ -1,25 +1,30 @@
 
 
-function FriendProperties( friend ) {
+function FriendProperties( {friend,userInfo,setCurrentFriend } ) {
+    const handleClick = () => {
+        setCurrentFriend(friend.registerUsername);
+    };
+    const friendInfo = userInfo.friendsInfo[friend.registerUsername];
+
     return(
-        <li className="friend_block">
+        <li className="friend_block" onClick={handleClick}>
         <div className="img_friend">
-          <img src={friend.img} className="cover" alt="" />
+          <img src={friend.registerImage} className="cover" alt="" />
         </div>
         <div className="details">
           <div className="friend_name">
-            {friend.name}
+            {friend.registerDisplayName}
             <p className="time_date">
-              {friend.day_time}
+              {friendInfo.day_time}
             </p>
           </div>
           <div className="last_message">
             <p>
-              {friend.last_msg}
+              {friendInfo.last_msg}
             </p>
-            {friend.num_msg && ( // Conditionally render the num_messages element
+              {/*{friend.num_msg && ( // Conditionally render the num_messages element
             <num_messages>{friend.num_msg}</num_messages>
-          )}
+          )}*/}
           </div>
         </div>
       </li>
