@@ -1,5 +1,5 @@
 
-function RegUsername({ registerUsername, setRegisterUsername }) {
+function RegUsername({ registerUsername, setRegisterUsername, usernameErrorMsg}) {
 
     return (
 
@@ -8,8 +8,9 @@ function RegUsername({ registerUsername, setRegisterUsername }) {
                 Username
             </label>
             <div className="col-sm-10">
-                <input type="email" className="form-control" id="inputEmail3" value={registerUsername}
-                       onChange={(e) => setRegisterUsername(e.target.value)}/>
+                <input type="text" className="form-control" id="inputEmail3" value={registerUsername}
+                       onChange={(e) => setRegisterUsername(e.target.value)} required/>
+                {usernameErrorMsg && <div className="error">{usernameErrorMsg}</div>}
             </div>
         </div>
     );
