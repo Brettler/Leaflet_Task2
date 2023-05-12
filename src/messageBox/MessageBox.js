@@ -1,15 +1,22 @@
 import MessageIcons from "../messageIcons/MessageIcons";
 import {useState} from 'react';
 
-function MessageBox({userInfo, handleNewMessage}) {
+function MessageBox({userInfo, currentFriend, handleNewMessage}) {
     const [messageText, setMessageText] = useState('')
-
+    const friendInfo = userInfo.friendsList.find(friend => friend.registerUsername === currentFriend);
     const handleSubmit = () => {
+
+        if(!messageText || !friendInfo){
+            return;
+        }
+        //const now = new Date();
+        //const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         const newMessage = {
             sender: userInfo.registerUsername,
             text: messageText,
-            time: new Date().toLocaleString(),
+            time: new Date().toLocaleString([], { hour: '2-digit', minute: '2-digit' }),
         };
+
         handleNewMessage(newMessage);
         setMessageText(''); // clear the message box
     };
