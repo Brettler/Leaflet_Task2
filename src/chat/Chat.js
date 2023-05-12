@@ -28,16 +28,26 @@ function Chat({userInfo, usersRegisterList, setUsersRegisterList}) {
           Such that only friends with the input string will stay.
           Finally we update the friendList with the setter setFriendList.
           When the friendList is updated it cause the App function to be called again and it will return the HTML we the updated friends list.*/
-        setFriendList(userInfo.friendsList.filter((friend) => friend.name.toLowerCase().startsWith(q.toLowerCase())));
+        setFriendList(userInfo.friendsList.filter((friend) => friend.registerDisplayName.toLowerCase().startsWith(q.toLowerCase())));
     }
 
 
     const handleNewMessage = (newMessage) => {
+        const now = new Date();
+        const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         const updatedUser = {
             ...userInfo,
             chatHistory: {
                 ...userInfo.chatHistory,
                 [currentFriend]: [...userInfo.chatHistory[currentFriend] || [], newMessage]
+            },
+            friendsInfo: {
+                ...userInfo.friendsInfo,
+                [currentFriend]: {
+                    ...userInfo.friendsInfo[currentFriend],
+                    last_msg: newMessage.text,
+                    day_time: timeString
+                }
             }
         };
 
@@ -67,9 +77,9 @@ function Chat({userInfo, usersRegisterList, setUsersRegisterList}) {
                 {/* Right side of the program */}
                 <div className="right_side">
                     {/* Information of the user we are currently chatting with */}
-                    <ProfileFriend/>
-                    <ChatWindow currentFriend={currentFriend} userInfo={userInfo} />
-                    <MessageBox userInfo={userInfo} handleNewMessage={handleNewMessage}/>
+                    <ProfileFriend currentFriend={currentFriend} userInfo={userInfo}/>
+                    <ChatWindow currentFriend={currentFriend} userInfo={userInfo}/>
+                    <MessageBox userInfo={userInfo} currentFriend={currentFriend} handleNewMessage={handleNewMessage}/>
                 </div>
             </div>
         </div>
