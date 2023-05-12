@@ -11,14 +11,17 @@ function RegisterInfo({properties, setProperties,
                           usernameErrorMsg, setUsernameErrorMsg}) {
 
     const validUsername = (value) => {
-        const userExists = usersRegisterList[value];
-        if(userExists) {
+        const userExists = Object.keys(usersRegisterList).find(
+            (username) => username.toLowerCase().replace(/\s/g, '') === value.toLowerCase().replace(/\s/g, '')
+        );
+        if (userExists) {
             setUsernameErrorMsg("This username is already taken");
         } else {
             setUsernameErrorMsg("");
         }
-        setProperties({...properties, registerUsername: value});
+        setProperties({ ...properties, registerUsername: value });
     };
+
 
     const validPassword = (e) => {
         const value = e.target.value;
