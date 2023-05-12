@@ -35,5 +35,12 @@ form {
 }
 
 .small-image {
-    width: 130px;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
 }
+
+#formFile {
+    padding-left: 12px;
+}
+
