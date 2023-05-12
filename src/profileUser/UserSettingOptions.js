@@ -1,7 +1,6 @@
-import {useState} from 'react';
 import AddFriend from "../FriendsList/addFriend/AddFriend";
-function UserSettingOptions({userInfo, usersRegisterList, handleLogout}) {
-    const [friendName, setFriendName] = useState('');
+
+function UserSettingOptions({userInfo, usersRegisterList, setUsersRegisterList, handleLogout}) {
     return (
         <>
             <ul className="icons">
@@ -18,7 +17,9 @@ function UserSettingOptions({userInfo, usersRegisterList, handleLogout}) {
                             <button type="button" className="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                         </div>
-                    <AddFriend userInfo={userInfo} usersRegisterList={usersRegisterList}/>
+                    <AddFriend userInfo={userInfo}
+                               usersRegisterList={usersRegisterList}
+                               setUsersRegisterList={setUsersRegisterList}/>
                     </div>
                 </div>
             </div>

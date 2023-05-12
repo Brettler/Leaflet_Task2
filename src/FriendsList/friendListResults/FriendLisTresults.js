@@ -1,10 +1,14 @@
 import FriendProperties from '../FriendProperties/FriendProperties';
 
 
-function FriendListResults({friends}) {
+function FriendListResults({userInfo, friends, setCurrentFriend}) {
 
     const friendsList = friends.map((friend, key) => {
-        return <FriendProperties img={friend.img} name={friend.name} day_time={friend.day_time} last_msg={friend.last_msg} num_msg={friend.num_msg} key={key}></FriendProperties>
+        return <FriendProperties friend={friend}
+                                 //num_msg={friend.num_msg}
+                                 userInfo={userInfo}
+                                 setCurrentFriend={setCurrentFriend}
+                                 key={key}/>
       })
 
     return (
