@@ -10,7 +10,7 @@ function RegUsername({ registerUsername, setRegisterUsername, usernameErrorMsg})
             <div className="col-sm-10">
                 <input type="text" className="form-control" id="inputEmail3" value={registerUsername}
                        onChange={(e) => setRegisterUsername(e.target.value)} required/>
-                {usernameErrorMsg && <div className="error">{usernameErrorMsg}</div>}
+                {usernameErrorMsg && <div className="alert alert-danger">{usernameErrorMsg}</div>}
             </div>
         </div>
     );

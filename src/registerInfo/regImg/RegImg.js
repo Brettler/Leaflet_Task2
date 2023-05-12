@@ -26,6 +26,7 @@ function RegImg({ registerImage, setRegisterImage}) {
             <div className="row mb-3">
                 <div className="col-sm-10 offset-sm-2">
                     <img
+                        id="default-image"
                         src={registerImage}
                         alt=""
                         className="img-fluid small-image mt-1"
