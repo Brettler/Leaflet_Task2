@@ -19,10 +19,21 @@ form {
 
 }
 
-.small-image {
-    width: 150px;
-}
-
 .login-link {
     padding-left: 40px;
+}
+
+#reg-to-login {
+    float: right;
+    margin-top: 10px;
+}
+
+.alert-danger {
+    margin-bottom: 0;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.small-image {
+    width: 130px;
 }

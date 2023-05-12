@@ -7,7 +7,7 @@ function RegisterButtons({ handleSubmit }) {
         <div>
             {/* Move to the login page to fill up the properties to log to the app*/}
             <Link to='/' onClick={handleSubmit} className="btn btn-success">{'Register'}</Link>
-            <span className="login-link">
+            <span id="reg-to-login" className="login-link">
                     {"Already registered? "}
                 {/* Move to the login page*/}
                 <Link to='/'>{'Login here'}</Link>
