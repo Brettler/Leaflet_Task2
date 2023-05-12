@@ -11,7 +11,7 @@ function RegisterInfo({properties, setProperties,
                           usernameErrorMsg, setUsernameErrorMsg}) {
 
     const validUsername = (value) => {
-        const userExists = usersRegisterList.filter(user => user.registerUsername.toLowerCase() === value.toLowerCase()).length > 0;
+        const userExists = usersRegisterList[value];
         if(userExists) {
             setUsernameErrorMsg("This username is already taken");
         } else {

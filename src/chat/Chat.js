@@ -1,17 +1,17 @@
-import friends from '../FriendProperties/friends';
+import friends from '../FriendsList/FriendProperties/friends';
 
 import SearchFriend from '../SearchFriend/SearchFriend';
 import {useState} from 'react';
-import FriendListResults from '../friendListResults/FriendLisTresults';
+import FriendListResults from '../FriendsList/friendListResults/FriendLisTresults';
 
 
 import ProfileUser from '../profileUser/ProfileUser';
 
 import './chat.css';
-import ProfileFriend from '../profileFriend/ProfileFriend';
+import ProfileFriend from '../FriendsList/profileFriend/ProfileFriend';
 import ChatWindow from '../chatWindow/ChatWindow';
 import MessageBox from '../messageBox/MessageBox';
-function Chat() {
+function Chat({userInfo, usersRegisterList}) {
 
   /*Create hook named state.
     As a deafult input we will be all the friends the user have.
@@ -43,10 +43,9 @@ function Chat() {
     <div className="container col-12">
       <div className="left_side">
         {/* Define User information and options */}
-        <ProfileUser/>
+        <ProfileUser userInfo={userInfo} usersRegisterList={usersRegisterList}/>
         {/* Define the search chat bar */}
-        {/* Passing to SearchFriend the variable doSearch ->
-          doSearch is type function */}
+        {/* Passing to SearchFriend the variable doSearch -> doSearch is type function */}
         <SearchFriend doSearch={doSearch}/>
         {/* Define the chat list */}
           {/* Define FRIENDs! */}
