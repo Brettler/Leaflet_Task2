@@ -25,6 +25,7 @@ function Register({ setUsersRegisterList, usersRegisterList }) {
             registerImage: properties.registerImage,
             chatHistory: {}, // chatHistory object will later store the chat history with each friend.
             friendsList: [], // friendList array will later store the list of friends of the user.
+            friendsInfo: {},
         };
 
         // Validate user inputs

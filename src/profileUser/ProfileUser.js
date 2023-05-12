@@ -3,7 +3,7 @@ import {Navigate} from "react-router-dom";
 import UserInfo from "./UserInfo";
 import UserSettingOptions from "./UserSettingOptions";
 
-function ProfileUser({userInfo, usersRegisterList}) {
+function ProfileUser({userInfo, usersRegisterList, setUsersRegisterList}) {
     const [isLoggedIn, setIsLoggedIn] = useState(true);
 
     function handleLogout() {
@@ -17,7 +17,10 @@ function ProfileUser({userInfo, usersRegisterList}) {
     return (
         <div className="header">
             <UserInfo userInfo={userInfo}/>
-            <UserSettingOptions userInfo={userInfo} usersRegisterList={usersRegisterList} handleLogout={handleLogout}/>
+            <UserSettingOptions userInfo={userInfo}
+                                usersRegisterList={usersRegisterList}
+                                setUsersRegisterList={setUsersRegisterList}
+                                handleLogout={handleLogout}/>
         </div>
     );
 }
