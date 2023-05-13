@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom';
 function RegisterButtons({handleSubmit}) {
     return (
         <div>
-            <Link to='/' onClick={handleSubmit} className="btn btn-success">{'Register'}</Link>
+            <Link to='/' onClick={handleSubmit} id="registration-btn" className="btn btn-success">{'Register'}</Link>
             <span id="reg-to-login" className="login-link">
                 {"Already registered? "}
                 <Link to='/'>{'Login here'}</Link>

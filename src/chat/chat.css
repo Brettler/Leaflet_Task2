@@ -281,3 +281,15 @@ num_messages {
   padding-left: 40px;
 }
 
+#send-message-btn {
+  margin: 5px;
+  padding: 4px 18px 3px 10px;
+  align-items: center;
+  background-color: rgb(117, 163, 114);
+  border-color: rgb(117, 163, 114);
+}
+
+#add-friend-btn {
+  background-color: rgb(89, 133, 86);
+  border-color: rgb(89, 133, 86);
+}
