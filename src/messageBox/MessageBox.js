@@ -32,7 +32,7 @@ function MessageBox({userInfo, currentFriend, handleNewMessage}) {
             <MessageIcons/>
             <input type="text" className="form-control chat_input" placeholder="Type your message..."
                    value={messageText} onChange={(e) => setMessageText(e.target.value)}/>
-            <button className="btn btn-success send_button" type="submit" onClick={handleSubmit}>
+            <button id="send-message-btn" className="btn btn-success send_button" type="submit" onClick={handleSubmit}>
                 <i className="bi bi-arrow-right"/>
             </button>
         </div>
