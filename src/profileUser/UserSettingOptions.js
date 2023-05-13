@@ -1,9 +1,10 @@
 import AddFriend from "../FriendsList/addFriend/AddFriend";
 
-
+/* These are the user options that are displayed as icons in the top left corner of the app. These options allow the
+* user to perform actions such as adding a new friend and logging out of the app. */
 function UserSettingOptions({userInfo, usersRegisterList, setUsersRegisterList, handleLogout}) {
 
-
+    // User icon options.
     return (
         <>
             <ul className="icons">
@@ -23,11 +24,12 @@ function UserSettingOptions({userInfo, usersRegisterList, setUsersRegisterList, 
                         <AddFriend userInfo={userInfo}
                                    usersRegisterList={usersRegisterList}
                                    setUsersRegisterList={setUsersRegisterList}
-                                   />
+                        />
                     </div>
                 </div>
             </div>
         </>
     );
 }
+
 export default UserSettingOptions;

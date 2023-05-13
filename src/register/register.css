@@ -46,3 +46,7 @@ form {
     padding-left: 12px;
 }
 
+#registration-btn{
+    background-color: rgb(89, 133, 86);
+    border-color: rgb(89, 133, 86);
+}
