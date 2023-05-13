@@ -1,8 +1,10 @@
+import React, { useState } from 'react';
+
 /* In this section, we validate if the entered password matches the verified password. If they do not match,
 * a relevant error message will be displayed. */
 function RegPassword({validPassword, validVerifyPassword, regErrorPasswordMSG, regErrorVerifyPasswordMSG}) {
+    const [verifyPasswordChanged, setVerifyPasswordChanged] = useState(false);
 
-    // Implement password verification and assign an appropriate error message if necessary.
     return (
         <>
             {/* Password section */}
@@ -11,7 +13,9 @@ function RegPassword({validPassword, validVerifyPassword, regErrorPasswordMSG, r
                 <div className="col-sm-10">
                     <input type="password" className="form-control" id="inputPassword3" onChange={(e) => {
                         validPassword(e);
-                        validVerifyPassword(e);
+                        if (verifyPasswordChanged) {
+                            validVerifyPassword(e);
+                        }
                     }}/>
                     {regErrorPasswordMSG
                         && (
@@ -20,14 +24,17 @@ function RegPassword({validPassword, validVerifyPassword, regErrorPasswordMSG, r
                             </div>
                         )}
                 </div>
+            </div>
 
             {/* Verify password section */}
-            </div>
             <div className="row mb-3">
                 <label htmlFor="inputPassword4" className="col-sm-2 col-form-label">Verify Password</label>
                 <div className="col-sm-10">
-                    <input type="password" className="form-control" id="inputPassword4" onChange={validVerifyPassword}/>
-                    {regErrorVerifyPasswordMSG && (
+                    <input type="password" className="form-control" id="inputPassword4" onChange={(e) => {
+                        setVerifyPasswordChanged(true);
+                        validVerifyPassword(e);
+                    }}/>
+                    {verifyPasswordChanged && regErrorVerifyPasswordMSG && (
                         <div className="alert alert-danger" role="alert">
                             {regErrorVerifyPasswordMSG}
                         </div>
