@@ -24,7 +24,7 @@ function AddFriend({userInfo, usersRegisterList, setUsersRegisterList}) {
         if (userInfo.friendsList.some(friend => friend.registerUsername === friendUsername)) {
             setAddFriendErrorMessage('This user is already your friend.');
 
-            // Add the new friend to the list of the user's friends.
+        // Add the new friend to the list of the user's friends.
         } else {
             const updatedUser = {
                 ...userInfo,
