@@ -80,6 +80,11 @@
   cursor: pointer;
 }
 
+.emojis {
+  width: 40px;
+  height: 40px;
+}
+
 .bi {
   padding-left: 10px;
 }
@@ -166,9 +171,11 @@
   align-items: center;
 }
 
-.last_message p {
+.last_message {
   color: gray;
   font-size: 0.9em;
+  word-wrap: break-word;
+  white-space: pre-wrap;
 }
 
 num_messages {
@@ -211,6 +218,7 @@ num_messages {
   gap: 10px;
   overflow-y: auto;
   padding: 15px;
+  white-space: pre-wrap;
 }
 
 .chat_input {
@@ -246,22 +254,25 @@ num_messages {
   padding: 8px 15px;
   border-radius: 10px;
   margin-bottom: 10px;
+  word-wrap: break-word;
 }
 
 .my_message {
   background-color: rgb(172, 202, 161);
   align-self: flex-start;
   position: relative;
+  padding-bottom: 2px;
 }
 
 .friend_message {
   background-color: #f1f1f1;
   align-self: flex-end;
   position: relative;
+  padding-bottom: 2px;
 }
 
 .message_time {
-  position: absolute;
+  position: unset;
   font-size: 10px;
   color: gray;
 }

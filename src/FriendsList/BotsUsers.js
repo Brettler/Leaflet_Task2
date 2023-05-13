@@ -9,7 +9,7 @@ import imgRick from './FriendProperties/images/Rick_Sanchez.jpg'
 /* An array containing information on Non-Playable Character (NPC) users. */
 const botUsers = [
     {
-        registerUsername: 'Regnar',
+        registerUsername: 'Ragnar',
         registerPassword: 'password',
         registerDisplayName: 'Ragnar Lothbrok',
         registerImage: imgRegnar,
