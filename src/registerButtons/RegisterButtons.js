@@ -1,4 +1,5 @@
 import {Link} from 'react-router-dom';
+import React from "react";
 
 /* The Register page features two buttons - one that navigates to the Login page, and the other that registers the user
 * before redirecting them to the Login page. */

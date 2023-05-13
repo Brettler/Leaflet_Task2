@@ -1,7 +1,9 @@
 /* The username field allows the user to choose their desired username, ensuring that it is not already in use by
 * another user. The username is case-insensitive. */
+
+
 function RegUsername({usernameRef, registerUsername, setRegisterUsername, usernameErrorMsg}) {
-    const handleUsernameChange = (e) => {
+    const handleErrorUsername= (e) => {
         setRegisterUsername(e.target.value);
         e.target.setCustomValidity(usernameErrorMsg || '');
     };
@@ -13,7 +15,7 @@ function RegUsername({usernameRef, registerUsername, setRegisterUsername, userna
                 <input ref={usernameRef} type="text" className={`form-control ${usernameErrorMsg ? 'is-invalid' : ''}`}
                        id="inputUserameAPP"
                        value={registerUsername}
-                       onChange={handleUsernameChange}
+                       onChange={handleErrorUsername}
                        onInvalid={(e) => e.target.setCustomValidity(usernameErrorMsg || '')}
                        required/>
                 <div className="invalid-feedback">
