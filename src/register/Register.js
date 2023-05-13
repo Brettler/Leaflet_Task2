@@ -1,7 +1,7 @@
 import RegisterButtons from '../registerButtons/RegisterButtons';
 import RegisterInfo from '../registerInfo/RegisterInfo';
 import './register.css'
-import { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {registerProperties} from '../registerInfo/RegProperties'
 import { Navigate } from 'react-router-dom';
 
@@ -19,7 +19,10 @@ function Register({ setUsersRegisterList, usersRegisterList }) {
     const [regErrorPasswordMSG, setRegErrorPasswordMSG] = useState("");
     const [regErrorVerifyPasswordMSG, setRegErrorVerifyPasswordMSG] = useState("");
     const [usernameErrorMsg, setUsernameErrorMsg] = useState("");
-
+    const usernameRef = useRef();
+    const passwordRef = useRef();
+    const verifyPasswordRef = useRef();
+    const displayNameRef = useRef();
     // Create a user object that holds all the relevant information about the user.
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -32,13 +35,35 @@ function Register({ setUsersRegisterList, usersRegisterList }) {
             friendsList: [],
             friendsInfo: {},
         };
-
+        console.log('displayNameRef:', displayNameRef.current);
         // Ensure that all required fields have been completed..
-        if (!userInfo.registerUsername || !userInfo.registerPassword || !userInfo.registerDisplayName) {
+        if (!userInfo.registerUsername) {
+            usernameRef.current.focus();
             setErrorMessage('Please fill out all fields');
             return;
-        } else if(regErrorPasswordMSG || regErrorVerifyPasswordMSG || usernameErrorMsg) {
+        } else if( usernameErrorMsg) {
+            usernameRef.current.focus();
             setErrorMessage('Invalid values fields');
+            return;
+        }
+
+        if (!userInfo.registerPassword) {
+            passwordRef.current.focus();
+            setErrorMessage('Please fill out all fields');
+            return;
+       } else if( regErrorPasswordMSG) {
+            passwordRef.current.focus();
+            setErrorMessage('Invalid values fields');
+            return;
+        } else if( regErrorVerifyPasswordMSG) {
+            verifyPasswordRef.current.focus();
+            setErrorMessage('Invalid values fields');
+            return;
+        }
+
+        if (!userInfo.registerDisplayName) {
+            displayNameRef.current.focus();
+            setErrorMessage('Please fill out all fields');
             return;
         }
 
@@ -71,7 +96,11 @@ function Register({ setUsersRegisterList, usersRegisterList }) {
     return (
         <div id='register' className='registerPage'>
             <form className="col-12">
-                <RegisterInfo properties={properties}
+                <RegisterInfo usernameRef={usernameRef}
+                              passwordRef={passwordRef}
+                              verifyPasswordRef={verifyPasswordRef}
+                              displayNameRef={displayNameRef}
+                              properties={properties}
                               setProperties={setProperties}
                               usersRegisterList={usersRegisterList}
                               regErrorPasswordMSG ={regErrorPasswordMSG}

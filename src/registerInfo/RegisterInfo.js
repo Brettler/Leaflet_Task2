@@ -7,7 +7,7 @@ import CheckPassword from "./regPassword/CheckPassword";
 /* This function manages all user information during registration, comprising the username, password, verify password,
 * display name, and profile picture. It verifies that the passwords match and that the chosen username is not already
 * in use. */
-function RegisterInfo({
+function RegisterInfo({   usernameRef, passwordRef, verifyPasswordRef, displayNameRef,
                           properties, setProperties,
                           usersRegisterList, regErrorPasswordMSG,
                           setRegErrorPasswordMSG,
@@ -54,14 +54,18 @@ function RegisterInfo({
     // Saves all the user information provided during registration.
     return (
         <>
-            <RegUsername registerUsername={properties.registerUsername}
+            <RegUsername usernameRef={usernameRef}
+                         registerUsername={properties.registerUsername}
                          setRegisterUsername={validUsername}
                          usernameErrorMsg={usernameErrorMsg}/>
-            <RegPassword validPassword={validPassword}
+            <RegPassword passwordRef={passwordRef}
+                         verifyPasswordRef={verifyPasswordRef}
+                         validPassword={validPassword}
                          validVerifyPassword={validVerifyPassword}
                          regErrorPasswordMSG={regErrorPasswordMSG}
                          regErrorVerifyPasswordMSG={regErrorVerifyPasswordMSG}/>
-            <RegDisplayName registerDisplayName={properties.registerDisplayName}
+            <RegDisplayName displayNameRef={displayNameRef}
+                            registerDisplayName={properties.registerDisplayName}
                             setRegisterDisplayName={(value) => setProperties({
                                 ...properties,
                                 registerDisplayName: value

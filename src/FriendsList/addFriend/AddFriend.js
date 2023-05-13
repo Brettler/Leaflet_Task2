@@ -1,10 +1,13 @@
 import {useState} from 'react';
 
+
 function AddFriend({userInfo, usersRegisterList, setUsersRegisterList}) {
     const [friendUsername, setFriendUsername] = useState('');
     const [addFriendErrorMessage, setAddFriendErrorMessage] = useState(null);
 
+
     function handleAddFriend() {
+        setAddFriendErrorMessage(null);
         // Find the user with the inputted friend name
         const friendUser = usersRegisterList[friendUsername];
 
@@ -38,22 +41,29 @@ function AddFriend({userInfo, usersRegisterList, setUsersRegisterList}) {
                     [friendUsername]: []
                 }
             };
-
             // Update the usersRegisterList in the parent component
             setUsersRegisterList(prevFriendList => {
                 return {...prevFriendList, [userInfo.registerUsername]: updatedUser};
             });
+
         }
     }
+
+    function handleFormSubmit(e) {
+        // Prevent form submission from refreshing the page
+        e.preventDefault();
+        handleAddFriend();
+    }
+
 
     return (
         <>
             <div className="modal-body">
-                <form id="add-friend">
+                <form id="add-friend" onSubmit={handleFormSubmit}>
                     <div className="mb-3">
                         <input type="text" value={friendUsername} className="form-control" id="friendName"
                                onChange={(e) => setFriendUsername(e.target.value)}
-                               placeholder="Friend's username"/>
+                               placeholder="Enter friend's username here"/>
                     </div>
                     {addFriendErrorMessage && (
                         <div className="alert alert-danger" role="alert">
@@ -64,7 +74,7 @@ function AddFriend({userInfo, usersRegisterList, setUsersRegisterList}) {
             </div>
             <div className="modal-footer">
                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" className="btn btn-success" onClick={handleAddFriend}>Add Friend</button>
+                <button type="button" form="add-friend" className="btn btn-success" onClick={handleAddFriend}>Add Friend</button>
             </div>
         </>
     )
