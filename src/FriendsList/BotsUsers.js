@@ -6,7 +6,7 @@ import imgHouse from './FriendProperties/images/Gregory_House.jpg'
 import imgSeinfeld from './FriendProperties/images/Jerry_Seinfeld.png'
 import imgRick from './FriendProperties/images/Rick_Sanchez.jpg'
 
-// Define an array of bot users
+/* An array containing information on Non-Playable Character (NPC) users. */
 const botUsers = [
     {
         registerUsername: 'Regnar',

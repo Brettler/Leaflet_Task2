@@ -1,3 +1,4 @@
+/* Chat page design */
 
 .chatPage {
   display: flex;
@@ -9,7 +10,6 @@
 
 * {
   font-family: 'Open Sans', sans-serif;
-  
 }
 
 .container {
@@ -46,7 +46,6 @@
   background: url("leafs.JPG") no-repeat center center;
   opacity: 0.2;
   background-size: cover;
-
 }
 
 .header {
@@ -195,7 +194,6 @@ num_messages {
   font-size: 0.8em;
   color: gray;
 }
-
 
 .chat_box {
   flex-grow: 1;
