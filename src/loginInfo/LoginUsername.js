@@ -1,4 +1,4 @@
-
+/* The username component verifies if the entered username is registered. */
 function LoginUsername({ loginUsername, setLoginUsername }) {
 
     return (
@@ -9,7 +9,6 @@ function LoginUsername({ loginUsername, setLoginUsername }) {
                        onChange={(e) => setLoginUsername(e.target.value)}/>
             </div>
         </div>
-
     );
 }
 export default LoginUsername;

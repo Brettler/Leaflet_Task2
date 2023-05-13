@@ -1,3 +1,4 @@
+/* The password component verifies whether the login password entered is correct for the specific username entered.  */
 function LoginPassword({ loginPassword, setLoginPassword }) {
     return (
         <div className="row mb-3">
@@ -7,7 +8,6 @@ function LoginPassword({ loginPassword, setLoginPassword }) {
                        onChange={(e) => setLoginPassword(e.target.value)}/>
             </div>
         </div>
-
     );
 }
 export default LoginPassword;
