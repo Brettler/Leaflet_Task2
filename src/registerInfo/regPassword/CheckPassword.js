@@ -1,6 +1,6 @@
-
+/* In this section, we verify whether the entered password meets the necessary criteria.
+* It must comprise at least five characters, including one digit, one lowercase letter, and one uppercase letter. */
 function CheckPassword(password) {
-
     let errorMsg = "";
 
     if (!password) {

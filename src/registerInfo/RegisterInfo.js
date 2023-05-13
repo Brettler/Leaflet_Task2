@@ -4,12 +4,18 @@ import RegDisplayName from "./RegDisplayName";
 import RegImg from "./regImg/RegImg";
 import CheckPassword from "./regPassword/CheckPassword";
 
-function RegisterInfo({properties, setProperties,
-                          usersRegisterList,regErrorPasswordMSG,
+/* This function manages all user information during registration, comprising the username, password, verify password,
+* display name, and profile picture. It verifies that the passwords match and that the chosen username is not already
+* in use. */
+function RegisterInfo({
+                          properties, setProperties,
+                          usersRegisterList, regErrorPasswordMSG,
                           setRegErrorPasswordMSG,
                           regErrorVerifyPasswordMSG, setRegErrorVerifyPasswordMSG,
-                          usernameErrorMsg, setUsernameErrorMsg}) {
+                          usernameErrorMsg, setUsernameErrorMsg
+                      }) {
 
+    // Verify that the chosen username is not already in use, regardless of upper or lower case letters.
     const validUsername = (value) => {
         const userExists = Object.keys(usersRegisterList).find(
             (username) => username.toLowerCase().replace(/\s/g, '') === value.toLowerCase().replace(/\s/g, '')
@@ -19,10 +25,10 @@ function RegisterInfo({properties, setProperties,
         } else {
             setUsernameErrorMsg("");
         }
-        setProperties({ ...properties, registerUsername: value });
+        setProperties({...properties, registerUsername: value});
     };
 
-
+    // This function verifies if the entered password complies with all requirements.
     const validPassword = (e) => {
         const value = e.target.value;
         const passwordErrorMsg = CheckPassword(value)
@@ -35,9 +41,9 @@ function RegisterInfo({properties, setProperties,
 
     };
 
+    // This function validates whether the "verify password" field matches the "password" field.
     const validVerifyPassword = (e) => {
         const value = e.target.value;
-
         if (value !== properties.registerPassword) {
             setRegErrorVerifyPasswordMSG("Passwords do not match");
         } else {
@@ -45,20 +51,25 @@ function RegisterInfo({properties, setProperties,
         }
     };
 
+    // Saves all the user information provided during registration.
     return (
         <>
             <RegUsername registerUsername={properties.registerUsername}
                          setRegisterUsername={validUsername}
-                         usernameErrorMsg={usernameErrorMsg} />
+                         usernameErrorMsg={usernameErrorMsg}/>
             <RegPassword validPassword={validPassword}
                          validVerifyPassword={validVerifyPassword}
                          regErrorPasswordMSG={regErrorPasswordMSG}
                          regErrorVerifyPasswordMSG={regErrorVerifyPasswordMSG}/>
             <RegDisplayName registerDisplayName={properties.registerDisplayName}
-                            setRegisterDisplayName={(value) => setProperties({...properties, registerDisplayName: value})}/>
+                            setRegisterDisplayName={(value) => setProperties({
+                                ...properties,
+                                registerDisplayName: value
+                            })}/>
             <RegImg registerImage={properties.registerImage}
                     setRegisterImage={(value) => setProperties({...properties, registerImage: value})}/>
         </>
     );
 }
+
 export default RegisterInfo;

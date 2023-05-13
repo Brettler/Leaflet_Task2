@@ -1,4 +1,4 @@
-/* The username component. */
+/* The username component verifies if the entered username is registered. */
 function LoginUsername({ loginUsername, setLoginUsername }) {
 
     return (

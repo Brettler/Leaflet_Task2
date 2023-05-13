@@ -1,4 +1,4 @@
-/* The password component. */
+/* The password component verifies whether the login password entered is correct for the specific username entered.  */
 function LoginPassword({ loginPassword, setLoginPassword }) {
     return (
         <div className="row mb-3">
