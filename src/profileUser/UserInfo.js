@@ -1,3 +1,4 @@
+/* Here, the top left bar displays the user's details such as their display name and profile picture.  */
 function UserInfo({userInfo}) {
     return (
         <>
@@ -8,6 +9,7 @@ function UserInfo({userInfo}) {
                 {userInfo.registerDisplayName}
             </div>
         </>
-);
+    );
 }
+
 export default UserInfo;

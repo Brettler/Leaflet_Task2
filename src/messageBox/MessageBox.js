@@ -1,12 +1,14 @@
 import MessageIcons from "../messageIcons/MessageIcons";
 import {useState} from 'react';
 
-/*  */
+/* Here, the message box is managed. If the user hasn't selected a friend or hasn't entered any message, they won't be
+* able to send a message. Otherwise, the user can send a message, and it will be displayed with a timestamp indicating
+* when it was sent. */
 function MessageBox({userInfo, currentFriend, handleNewMessage}) {
     const [messageText, setMessageText] = useState('')
     const friendInfo = userInfo.friendsList.find(friend => friend.registerUsername === currentFriend);
 
-    //
+    // Check if either the message box is empty or a friend has not been selected.
     const handleSubmit = () => {
         if (!messageText || !friendInfo) {
             return;
@@ -19,11 +21,12 @@ function MessageBox({userInfo, currentFriend, handleNewMessage}) {
             time: new Date().toLocaleString([], {hour: '2-digit', minute: '2-digit'}),
         };
 
+        // Clear the message box once a message has been sent.
         handleNewMessage(newMessage);
-        setMessageText(''); // clear the message box
+        setMessageText('');
     };
 
-    //
+    // Message box structure.
     return (
         <div className="chat_input_container">
             <MessageIcons/>
