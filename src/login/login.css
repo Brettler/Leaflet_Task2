@@ -1,12 +1,12 @@
 /* Login page design */
 
 .loginPage {
-    display:flex;
+    display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     background: url("leafs.JPG");
-    padding:10px;
+    padding: 10px;
 }
 
 form {
@@ -25,7 +25,7 @@ form {
     width: 90%;
 }
 
-.login-link{
+.login-link {
     padding-right: 5px;
 }
 

@@ -22,9 +22,6 @@ function App() {
         )
     );
 
-    console.log('User valid info:', userValidInfo);
-    console.log('Users register list:', usersRegisterList);
-
     // Render the personal chat page only if the user is authenticated.
     const renderChat = () => {
         if (userValidInfo) {
