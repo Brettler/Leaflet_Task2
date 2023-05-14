@@ -2,10 +2,13 @@
 * properties, including their display name, profile picture, and the time and content of the last message sent. */
 function FriendProperties({friend, userInfo, setCurrentFriend}) {
 
+    // Extracting and formatting friend properties.
     const handleClick = () => {
         setCurrentFriend(friend.registerUsername);
     };
     const friendInfo = userInfo.friendsInfo[friend.registerUsername];
+    // Shorten the display of the last message to fit in the 'friend block'.
+    const lastMessage = friendInfo.last_msg.length > 32 ? friendInfo.last_msg.slice(0, 32) + "..." : friendInfo.last_msg;
 
     // The individual friend chats structure.
     return (
@@ -22,11 +25,8 @@ function FriendProperties({friend, userInfo, setCurrentFriend}) {
                 </div>
                 <div className="last_message">
                     <p>
-                        {friendInfo.last_msg}
+                        {lastMessage}
                     </p>
-                    {/*{friend.num_msg && ( // Conditionally render the num_messages element
-                        <num_messages>{friend.num_msg}</num_messages>
-                    )}*/}
                 </div>
             </div>
         </li>

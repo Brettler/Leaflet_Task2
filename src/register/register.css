@@ -6,7 +6,7 @@
     align-items: center;
     min-height: 100vh;
     background: url("leafs.JPG");
-    margin:0px;
+    margin: 0;
 }
 
 form {
@@ -40,13 +40,14 @@ form {
     width: 150px;
     height: 150px;
     border-radius: 50%;
+    object-fit: cover;
 }
 
 #formFile {
     padding-left: 12px;
 }
 
-#registration-btn{
+#registration-btn {
     background-color: rgb(89, 133, 86);
     border-color: rgb(89, 133, 86);
 }

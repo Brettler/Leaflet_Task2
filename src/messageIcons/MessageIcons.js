@@ -3,9 +3,9 @@
 function MessageIcons() {
     return (
         <div className="chat_icons">
-            <i className="bi bi-emoji-smile"/>
+            {/*<i className="bi bi-emoji-smile"/>
             <i className="bi bi-paperclip"/>
-            <i className="bi bi-person-up"></i>
+            <i className="bi bi-person-up"></i>*/}
         </div>
     );
 }

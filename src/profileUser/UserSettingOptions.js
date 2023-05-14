@@ -8,9 +8,10 @@ function UserSettingOptions({userInfo, usersRegisterList, setUsersRegisterList, 
     return (
         <>
             <ul className="icons">
-                <i className="bi bi-door-closed logout_icon" onClick={handleLogout}/>
-                <i className="bi bi-person-add add_friend_icon" data-bs-toggle="modal"
-                   data-bs-target="#addFriendModal"/>
+                <i className="bi bi-door-closed logout_icon" data-toggle="tooltip" data-placement="bottom"
+                   title="Logout" onClick={handleLogout}/>
+                <i className="bi bi-person-add add_friend_icon" data-toggle="tooltip" data-placement="bottom"
+                   title="Add Friend" data-bs-toggle="modal" data-bs-target="#addFriendModal"/>
             </ul>
             <div className="modal fade" id="addFriendModal" tabIndex={-1} aria-labelledby="addFriendModalLabel"
                  aria-hidden="true">

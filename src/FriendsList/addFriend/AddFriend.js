@@ -8,6 +8,7 @@ import {useState} from 'react';
 function AddFriend({userInfo, usersRegisterList, setUsersRegisterList}) {
     const [friendUsername, setFriendUsername] = useState('');
     const [addFriendErrorMessage, setAddFriendErrorMessage] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     // Search the list of registered users for the user with the matching username.
     function handleAddFriend() {
@@ -45,6 +46,7 @@ function AddFriend({userInfo, usersRegisterList, setUsersRegisterList}) {
             setUsersRegisterList(prevFriendList => {
                 return {...prevFriendList, [userInfo.registerUsername]: updatedUser};
             });
+            setIsModalOpen(false);
         }
     }
 
@@ -52,6 +54,18 @@ function AddFriend({userInfo, usersRegisterList, setUsersRegisterList}) {
     function handleFormSubmit(e) {
         e.preventDefault();
         handleAddFriend();
+    }
+
+    // Clear the modal's input box.
+    function handleOpenModal() {
+        setIsModalOpen(true);
+        setFriendUsername('');
+    }
+
+    // Clear the modal's error message.
+    function handleCloseModal() {
+        setIsModalOpen(false);
+        setAddFriendErrorMessage(null);
     }
 
     // The modal structure.
@@ -64,7 +78,7 @@ function AddFriend({userInfo, usersRegisterList, setUsersRegisterList}) {
                                onChange={(e) => setFriendUsername(e.target.value)}
                                placeholder="Enter friend's username here"/>
                     </div>
-                    {addFriendErrorMessage && (
+                    {isModalOpen && addFriendErrorMessage && (
                         <div className="alert alert-danger" role="alert">
                             {addFriendErrorMessage}
                         </div>
@@ -72,10 +86,10 @@ function AddFriend({userInfo, usersRegisterList, setUsersRegisterList}) {
                 </form>
             </div>
             <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal"
+                        onClick={handleCloseModal}>Close</button>
                 <button type="button" form="add-friend" id="add-friend-btn" className="btn btn-success"
-                        data-bs-dismiss="modal" onClick={handleAddFriend}>Add Friend
-                </button>
+                        onClick={() => { handleAddFriend(); handleOpenModal(); }}>Add Friend</button>
             </div>
         </>
     );

@@ -35,7 +35,6 @@ function Register({ setUsersRegisterList, usersRegisterList }) {
             friendsList: [],
             friendsInfo: {},
         };
-        console.log('displayNameRef:', displayNameRef.current);
         // Ensure that all required fields have been completed..
         if (!userInfo.registerUsername) {
             usernameRef.current.focus();
@@ -71,7 +70,6 @@ function Register({ setUsersRegisterList, usersRegisterList }) {
         setUsersRegisterList(prevUsers => {
             const updatedUsers = {...prevUsers};
             updatedUsers[userInfo.registerUsername] = userInfo;
-            console.log('Updated usersRegisterList:', updatedUsers);
             setRedirectToLogin(true);
             return updatedUsers;
         })

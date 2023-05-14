@@ -7,8 +7,10 @@ function ProfileFriend({currentFriend, userInfo}) {
     if (!friendInfo) {
         return (
             <div className="header">
-                <div className="user_image"></div>
-                <div className="user_name"></div>
+                <div className="user_image">
+                    <img src="/fall.JPG" className="cover" alt=""/>
+                </div>
+                <div className="user_name">Welcome! To get started, add friends to chat with by clicking on the 'Add Friend' icon.</div>
             </div>
         );
     }
