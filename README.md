@@ -26,3 +26,5 @@ If any of the mandatory and restricted fields are not filled in properly, an app
     Between the user's details and the friend list is a search box that allows users to search for a specific friend within the list. The list will only display friends whose display names contain the typed prefix, temporarily hiding the rest of the friends.
 
 To ensure consistent and cohesive design throughout the app, each webpage has a corresponding CSS file that applies its unique design elements.
+
+To enhance user experience, we have added a few NPC (non-playable character) users that you can add as friends. Their names are: Ragnar Lothbrok, Louis Litt, Eleanor Shellstrop, Frank Underwood, Gregory House, Jerry Seinfeld, and Rick Sanchez.
