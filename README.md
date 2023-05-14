@@ -13,7 +13,7 @@ Once you are in the Chats page, you will see a split-screen interface. The left 
 
 To close the app, use the keyboard shortcut "Ctrl+C" and then type "Y" to confirm.
 
-To enhance user experience, we have added a few NPC (non-playable character) users that you can add as friends. Their usernames are: Ragnar, Louis, Eleanor, Frank, Gregory, Jerry, and Rick.
+To enhance user experience, we have added a few NPC (non-playable character) users that you can add as friends. Their usernames are: Ragnar, Louis, Eleanor, Frank, Gregory, Jerry, and Rick. This feature is in addition to the ability to create new registered users and add them as friends.
 
 ## Webpages
 * Login - The main page of our app is the login page, which features a form with input boxes for the user's username and password. The page also includes buttons that allow users to access their personal chat page or the registration page. The username input box verifies whether the username is already registered, while the password box ensures that the entered password matches the username. If either of these fields is left blank or does not match, an error message will be displayed. Once the user enters the correct login credentials, they can access their personalized chat page by clicking on the "Login" button. If the user hasn't registered yet, they can click on the "Register" button, which will redirect them to the registration page.
