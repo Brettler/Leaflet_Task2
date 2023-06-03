@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 
 
-function UserDataRequest({userValidInfo, userToken, setUserData}) {
-
+function UserDataRequest({userValidInfo, setUserData}) {
+    // get token from local storage
+    const userToken = localStorage.getItem('token');
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -27,7 +28,7 @@ function UserDataRequest({userValidInfo, userToken, setUserData}) {
         };
 
         fetchData();
-    }, [userValidInfo, userToken, setUserData]);  // re-run effect when these values change
+    }, [userValidInfo, setUserData]);  // re-run effect when these values change
 
     return null;  // or return some JSX if needed
 }

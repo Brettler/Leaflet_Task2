@@ -1,6 +1,6 @@
 /* Implements the chat history and its display for the current user and the selected friend chat. */
-function ChatWindow({currentFriend, userInfo}) {
-    const messages = userInfo.chatHistory[currentFriend] || [];
+function ChatWindow({currentFriend, chatHistory}) {
+    const messages = chatHistory[currentFriend.id] || [];
 
     // Chat box structure.
     return (
@@ -8,10 +8,10 @@ function ChatWindow({currentFriend, userInfo}) {
             <div className="message_container">
                 {messages.map((message, index) => (
                     <div key={index}
-                         className={`message ${message.sender === userInfo.registerUsername ? 'my_message' : 'friend_message'}`}>
-                        {message.text}
+                         className={`message ${message.sender.username === currentFriend.user.username ? 'my_message' : 'friend_message'}`}>
+                        {message.content}
                         <div className="message_time">
-                            {message.time}
+                            {new Date(message.created).toLocaleString()}
                         </div>
                     </div>
                 ))}

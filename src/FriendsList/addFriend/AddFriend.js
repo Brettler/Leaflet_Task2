@@ -1,56 +1,75 @@
 import {useState} from 'react';
+import addFriendAdapter from "../../API/addFriendAdapter";
 
 /* This function allows users to add friends by clicking on a designated icon, which opens a modal where they can enter
 * the username of the friend they want to add. If the username is not registered or is already on the friend list, an
 * error message will be displayed. However, if the input is valid, the friend will be added to the list on the
 * left-hand side of the page. The friend's display name and profile picture will be displayed in the appropriate list
 * item. */
-function AddFriend({userInfo, usersRegisterList, setUsersRegisterList}) {
+function AddFriend({userInfo, setContactsList}) {
     const [friendUsername, setFriendUsername] = useState('');
     const [addFriendErrorMessage, setAddFriendErrorMessage] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    // Search the list of registered users for the user with the matching username.
-    function handleAddFriend() {
-        setAddFriendErrorMessage(null);
-        const friendUser = usersRegisterList[friendUsername];
 
-        // If the username entered is not found in the registered users list, an error will be displayed.
-        if (!friendUser) {
-            setAddFriendErrorMessage('No user with this name exists.');
-            return;
-        }
+    async function addFriendRequest(username) {
+        // get token from local storage
+        const userToken = localStorage.getItem('token');
 
-        // Verify if the friend already exists in the user's list of friends.
-        if (userInfo.friendsList.some(friend => friend.registerUsername === friendUsername)) {
-            setAddFriendErrorMessage('This user is already your friend.');
+        const response = await fetch('http://localhost:5000/api/Chats', {
+            'method': 'post',
+            'headers': {
+                'Content-Type': 'application/json',
+                "authorization": 'Bearer ' + userToken,
+            },
+            'body': JSON.stringify({ username: username })
+        });
 
-        // Add the new friend to the list of the user's friends.
+        if (response.ok) {
+            const serverData = await response.json();
+            // Adapt the data retrieve from the server into our variables.
+            const friendUser = addFriendAdapter(serverData);
+            return friendUser;
         } else {
-            const updatedUser = {
-                ...userInfo,
-                friendsList: [...userInfo.friendsList, friendUser],
-                friendsInfo: {
-                    ...userInfo.friendsInfo, [friendUsername]: {
-                        day_time: "",
-                        last_msg: "",
-                    }
-                },
-                chatHistory: {
-                    ...userInfo.chatHistory,
-                    [friendUsername]: []
-                }
-            };
-
-            // Update the 'usersRegisterList' in the parent component.
-            setUsersRegisterList(prevFriendList => {
-                return {...prevFriendList, [userInfo.registerUsername]: updatedUser};
-            });
-            setIsModalOpen(false);
+            throw new Error('There is no such username in the system');
         }
     }
 
-    // Prevent clicking 'enter' from refreshing the page.
+    // Search the list of registered users for the user with the matching username.
+    async function handleAddFriend() {
+        setAddFriendErrorMessage(null);
+
+        // old:
+        //const friendUser = usersRegisterList[friendUsername];
+
+        // If the username entered is not found in the registered users list, an error will be displayed.
+        // if (!friendUser) {
+        //     setAddFriendErrorMessage('No user with this name exists.');
+        //     return;
+        // }
+        // #################### hemi want us to allow to add the same person multyple times ######################
+        // Verify if the friend already exists in the user's list of friends.
+        // if (userInfo.friendsList.some(friend => friend.registerUsername === friendUsername)) {
+        //     setAddFriendErrorMessage('This user is already your friend.');
+
+        // Add the new friend to the list of the user's friends.
+
+        try {
+            const friendUser = await addFriendRequest(friendUsername);
+
+            setContactsList((prevContacts) => {
+                return [...prevContacts, friendUser];
+            });
+
+            setIsModalOpen(false);
+        } catch (error) {
+            setAddFriendErrorMessage(error.message);
+        }
+    }
+
+
+
+            // Prevent clicking 'enter' from refreshing the page.
     function handleFormSubmit(e) {
         e.preventDefault();
         handleAddFriend();
@@ -89,7 +108,8 @@ function AddFriend({userInfo, usersRegisterList, setUsersRegisterList}) {
                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal"
                         onClick={handleCloseModal}>Close</button>
                 <button type="button" form="add-friend" id="add-friend-btn" className="btn btn-success"
-                        onClick={() => { handleAddFriend(); handleOpenModal(); }}>Add Friend</button>
+                        // ################# Maybe need to swich between those 2 functions call #########
+                        onClick={() => { handleOpenModal(); }}>Add Friend</button>
             </div>
         </>
     );
