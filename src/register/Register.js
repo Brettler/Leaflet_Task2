@@ -4,6 +4,7 @@ import './register.css'
 import React, { useState, useRef } from 'react';
 import {registerProperties} from '../registerInfo/RegProperties'
 import { Navigate } from 'react-router-dom';
+import createRegisterRequestBody from "../API/RegisterAdapter";
 
 /* The Register page logic encompasses all essential fields for a new user to complete their registration. These
 * mandatory fields comprise the username, password, verify password, and display name. Additionally, there is an
@@ -24,7 +25,7 @@ function Register({ setUsersRegisterList, usersRegisterList }) {
     const verifyPasswordRef = useRef();
     const displayNameRef = useRef();
     // Create a user object that holds all the relevant information about the user.
-    const handleSubmit = (e) => {
+    const handleSubmit = async  (e) => {
         e.preventDefault();
         const userInfo = {
             registerUsername: properties.registerUsername,
@@ -66,14 +67,51 @@ function Register({ setUsersRegisterList, usersRegisterList }) {
             return;
         }
 
-        // Update the list of registered users..
-        setUsersRegisterList(prevUsers => {
-            const updatedUsers = {...prevUsers};
-            updatedUsers[userInfo.registerUsername] = userInfo;
+
+        const requestBody = createRegisterRequestBody(userInfo);
+        console.log("Sending request to server", requestBody);
+        const response = await fetch('http://localhost:5000/api/Users', {
+            'method': 'post',
+            'headers': {
+                'Content-Type': 'application/json',
+            },
+            'body': JSON.stringify(requestBody)
+        });
+        console.log("Server Response", response);
+
+        let data = {};
+
+        // This part is only if the server send us something in the body.
+        // In this case of register, the server will just send us 200 if the register went smooth and each other
+        // number that indicates something else. for excample 409 if there is already user with the same username.
+        // If the reposnse is only feedback with numbers, ' data = await response.json()' will give us error.
+        try {
+            data = await response.json();
+            console.log("Server Response Body", data);
+        } catch (err) {
+            console.error("Failed to parse response body", err);
+        }
+
+        if (response.ok) {
+            // Update the list of registered users..
+            setUsersRegisterList(prevUsers => {
+                const updatedUsers = {...prevUsers};
+                updatedUsers[userInfo.registerUsername] = userInfo;
+                setRedirectToLogin(true);
+                return updatedUsers;
+            })
             setRedirectToLogin(true);
-            return updatedUsers;
-        })
+        } else {
+            setErrorMessage(data.message || 'Failed to register');
+        }
+
+
+
+
+
+
     };
+
 
     // Redirect to the Login page once registration is complete.
     const handlError = function () {
@@ -111,9 +149,6 @@ function Register({ setUsersRegisterList, usersRegisterList }) {
                 />
 
                 <RegisterButtons handleSubmit={handleSubmit}/>
-
-
-
                 {handlError()}
             </form>
         </div>
