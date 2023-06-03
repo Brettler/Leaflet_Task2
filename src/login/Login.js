@@ -9,18 +9,43 @@ import './login.css'
 * username and password, clicking on the login button will take them to their chat page. If the username or password
 * is invalid, an error message will be displayed. In case the user is not yet registered, they can click on the register
 * button to create a new account. */
-function Login({setUserValidInfo, usersRegisterList}) {
+function Login({setUserValidInfo, setUserToken, usersRegisterList}) {
     const [loginUsername, setLoginUsername] = useState("");
     const [loginPassword, setLoginPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState(false);
     const [redirectToChat, setRedirectToChat] = useState(false);
 
     // Verify whether the entered username and password correspond with each other.
-    const loginUser = (e) => {
+    const loginUser = async (e) => {
         e.preventDefault();
-        const user = usersRegisterList[loginUsername]
-        if (user && user.registerPassword === loginPassword) {
-            setUserValidInfo(user.registerUsername);
+        /* THIS LOGIC IS CLIENT SIDE. WE WILL NEED TO MOVE IT TO THE SERVER SIDE WHEN HE BUILD IT. */
+        // const user = usersRegisterList[loginUsername]
+        // if (user && user.registerPassword === loginPassword) {
+        //     setUserValidInfo(user.registerUsername);
+        //     setRedirectToChat(true);
+        // } else {
+        //     setErrorMessage(true);
+        // }
+        const userCredentials = {
+            username: loginUsername,
+            password: loginPassword,
+        };
+
+        console.log("Sending to server: ", userCredentials);
+
+        const response = await fetch("http://localhost:5000/api/Tokens", {
+            'method': "post",
+            'headers': { "Content-Type": "application/json" },
+            'body': JSON.stringify(userCredentials)
+        });
+
+        if (response.ok) {
+            const tokenJWT = await response.text();
+            console.log("Received from server: ", tokenJWT);
+
+            localStorage.setItem("token", tokenJWT);
+            setUserValidInfo(loginUsername);
+            setUserToken(tokenJWT)
             setRedirectToChat(true);
         } else {
             setErrorMessage(true);

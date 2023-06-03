@@ -6,6 +6,7 @@ import './chat.css';
 import ProfileFriend from '../FriendsList/profileFriend/ProfileFriend';
 import ChatWindow from '../chatWindow/ChatWindow';
 import MessageBox from '../messageBox/MessageBox';
+import FriendListRequest from "../API/FriendListRequest";
 
 /* This is where the logic for the personalized Chats page is implemented. When a user logs in, their display name and
 * profile picture are displayed in the top left bar. This bar also contains icons for adding a friend and logging out.
@@ -14,8 +15,29 @@ import MessageBox from '../messageBox/MessageBox';
 * By clicking on a chat, the friend's display name and profile picture are displayed on the top right bar. Below this
 * bar is the chats window where the user can see the ongoing conversation. A text box is located beneath the window for
 * the user to type a message and send it using the button on the right. */
-function Chat({userInfo, usersRegisterList, setUsersRegisterList}) {
+function Chat({userInfo, userData, usersRegisterList, setUsersRegisterList}) {
     const [currentFriend, setCurrentFriend] = useState(null);
+
+    const [contactList, setContactList] = useState(null);
+    // Fetch friend data from server when the component mounts
+    useEffect(() => {
+        const token = localStorage.getItem("token"); // storing the JWT token in local storage
+        if (token) {
+            FriendListRequest(token).then(data => {
+                // Transform the server response to fit the current system
+                const AdapterFriendsInformation = data.map(friend => ({
+                    registerUsername: friend.user.username,
+                    registerDisplayName: friend.user.displayName,
+                    registerImage: friend.user.profilePic,
+                    last_msg: friend.lastMessage.content,
+                    day_time: new Date(friend.lastMessage.created).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+                }));
+                setContactList(AdapterFriendsInformation);
+            });
+        }
+    }, []);
+
+
     // Update the user's friend list based on the friends they add.
     const [friendList, setFriendList] = useState(userInfo.friendsList);
     useEffect(() => {
@@ -60,7 +82,7 @@ function Chat({userInfo, usersRegisterList, setUsersRegisterList}) {
         <div id='chat' className='chatPage'>
             <div className="container col-12">
                 <div className="left_side">
-                    <ProfileUser userInfo={userInfo} usersRegisterList={usersRegisterList}
+                    <ProfileUser userData={userData} usersRegisterList={usersRegisterList}
                                  setUsersRegisterList={setUsersRegisterList}/>
                     <SearchFriend doSearch={doSearch}/>
                     <FriendListResults userInfo={userInfo}
