@@ -5,7 +5,7 @@ import UserSettingOptions from "./UserSettingOptions";
 
 /* This function implements the logout functionality. When the user clicks on the logout icon, they will be redirected
 * to the login page.  */
-function ProfileUser({userData, userInfo, usersRegisterList, setUsersRegisterList}) {
+function ProfileUser({userData, setContactsList}) {
     const [isLoggedIn, setIsLoggedIn] = useState(true);
 
     // Set user to 'logged out'.
@@ -22,9 +22,7 @@ function ProfileUser({userData, userInfo, usersRegisterList, setUsersRegisterLis
     return (
         <div className="header">
             <UserInfo userData={userData}/>
-            <UserSettingOptions userInfo={userInfo}
-                                usersRegisterList={usersRegisterList}
-                                setUsersRegisterList={setUsersRegisterList}
+            <UserSettingOptions setContactsList={setContactsList}
                                 handleLogout={handleLogout}/>
         </div>
     );

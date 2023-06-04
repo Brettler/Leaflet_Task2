@@ -1,28 +1,48 @@
+// Import the necessary hooks from React
+import { useEffect, useState } from 'react';
 
+// Define the FriendListRequest function. This function takes one argument: the user's token.
+ const FriendListRequest = () => {
+     // get token from local storage
+     const userToken = localStorage.getItem('token');
+    // Initialize `loading` state variable to true. This will be used to track when we're done loading the data.
+    const [loading, setLoading] = useState(true);
 
-async function FriendListRequest(userToken) {
-    try {
-        const response = await fetch("http://localhost:5000/api/Chats", {
-            'method': "get",
-            'headers': {
-                "Content-Type": "application/json",
-                "Authorization": 'Bearer ' + userToken
-            },
-        });
+    // Initialize `friends` state variable to an empty array. This will hold the friends data once it is fetched.
+    const [contacts, setContacts] = useState([]);
 
-        if (response.ok) {
-            const data = await response.json();
-            console.log("Friends data received from server: ", data);
-            return data;
-        } else {
-            console.error("Error status: ", response.status);
-        }
+    // Use the useEffect hook to fetch the friends data when the component is mounted.
+    useEffect(() => {
+        // Define an asynchronous function inside the useEffect hook.
+        const fetchFriends = async () => {
+            try {
+                // Fetch the data from the API endpoint.
+                const res = await fetch('http://localhost:5000/api/Chats', {
+                    'method': 'get',
+                    'headers': {
+                        'Content-Type': 'application/json',
+                        "authorization": 'Bearer ' + userToken,
+                    },
+                });
+                // Parse the response data as JSON.
+                const data = await res.json();
 
-    } catch (error) {
-        console.error('Fetch friends error:', error);
-    }
+                // Update the `friends` state variable with the fetched data.
+                setContacts(data);
+            } catch (e) {
+                // If an error occurred, log it to the console.
+                console.log(e);
+            } finally {
+                // Regardless of success or failure, update the `loading` state variable to false because we're done loading.
+                setLoading(false);
+            }
+        };
+        // Call the fetchFriends function.
+        fetchFriends();
+    }, [userToken]); // We pass `userToken` as a dependency to useEffect, which means the effect will re-run if `userToken` changes.
 
-    return null;
+    // Return the `loading` and `friends` state variables. These can be used by the parent component.
+    return { contacts, loading };
 }
 
 export default FriendListRequest;
