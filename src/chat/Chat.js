@@ -44,18 +44,17 @@ function Chat({userData}) {
     // Will hold the user list that contain in the user search.
     const [searchResults, setSearchResults] = useState([]);
 
+    const { contacts, loading} = FriendListRequest();
+
+
+
     // Fetch friends
     useEffect(() => {
-        const fetchData = async () => {
-            const {contacts, loading} = await FriendListRequest();
-            if (!loading) {
-                setSearchResults(contacts);
-                setSearchResults(contacts);
-
-            }
-        };
-        fetchData();
-    }, []);
+        if (!loading) {
+            setSearchResults(contacts);
+            setContactsList(contacts);
+        }
+    }, [loading, contacts]);
 
 
     // Search for a friend is case-insensitive and filters the displayed list of friends based on the prefix entered
@@ -68,6 +67,7 @@ function Chat({userData}) {
         if (currentFriend) {
             ChatMessagesRequest(currentFriend.id)
                 .then(messages => {
+                    messages.reverse(); // reverse the array
                     setChatHistory(prevChatHistory => ({
                         ...prevChatHistory,
                         [currentFriend.id]: messages
@@ -75,6 +75,7 @@ function Chat({userData}) {
                 })
                 .catch(error => console.error('Failed to fetch messages:', error));
         }
+        console.log("")
     }, [currentFriend]);
 
 
@@ -92,12 +93,6 @@ function Chat({userData}) {
             };
         });
 
-
-
-        // Updates the user's information, including their friend list and chat history with each friend.
-        // setUsersRegisterList(prevUsers => {
-        //     return {...prevUsers, [userInfo.registerUsername]: updatedUser};
-        // });
     };
 
     // Chat page structure.
@@ -108,14 +103,14 @@ function Chat({userData}) {
                     <ProfileUser userData={userData}
                                  setContactsList={setContactsList}/>
                     <SearchFriend doSearch={doSearch}/>
-                    <FriendListResults contactsList={contactsList}
+                    <FriendListResults contactsList={searchResults}
                                        setCurrentFriend={setCurrentFriend}/>
                 </div>
 
                 {/* Define The chat window - right side of the program */}
                 <div className="right_side">
                     <ProfileFriend currentFriend={currentFriend} contactsList={contactsList}/>
-                    <ChatWindow currentFriend={currentFriend}/>
+                    <ChatWindow currentFriend={currentFriend} chatHistory={chatHistory}/>
                     <MessageBox currentFriend={currentFriend} handleNewMessage={handleNewMessage}/>
                 </div>
             </div>

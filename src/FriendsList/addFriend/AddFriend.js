@@ -1,5 +1,4 @@
 import {useState} from 'react';
-import addFriendAdapter from "../../API/addFriendAdapter";
 
 /* This function allows users to add friends by clicking on a designated icon, which opens a modal where they can enter
 * the username of the friend they want to add. If the username is not registered or is already on the friend list, an
@@ -26,18 +25,23 @@ function AddFriend({userInfo, setContactsList}) {
         });
 
         if (response.ok) {
-            const serverData = await response.json();
+            const friendUser = await response.json();
+            console.log("Reposed from the server adding a friend", friendUser)
             // Adapt the data retrieve from the server into our variables.
-            const friendUser = addFriendAdapter(serverData);
+            //const friendUser = addFriendAdapter(serverData);
             return friendUser;
         } else {
-            throw new Error('There is no such username in the system');
+            throw new Error('No user with this name exists.');
         }
     }
 
     // Search the list of registered users for the user with the matching username.
     async function handleAddFriend() {
         setAddFriendErrorMessage(null);
+        if (!friendUsername) {
+            setAddFriendErrorMessage('Please enter a username.');
+            return;
+        }
 
         // old:
         //const friendUser = usersRegisterList[friendUsername];
@@ -109,7 +113,7 @@ function AddFriend({userInfo, setContactsList}) {
                         onClick={handleCloseModal}>Close</button>
                 <button type="button" form="add-friend" id="add-friend-btn" className="btn btn-success"
                         // ################# Maybe need to swich between those 2 functions call #########
-                        onClick={() => { handleOpenModal(); }}>Add Friend</button>
+                        onClick={() => { handleAddFriend(); handleOpenModal(); }}>Add Friend</button>
             </div>
         </>
     );

@@ -1,11 +1,9 @@
 /* If the user has not clicked on a friend chat yet, the top right bar will remain blank. Otherwise, it will display
 * the details of the friend such as their display name and profile picture.  */
 function ProfileFriend({currentFriend, contactsList}) {
-    // contactsList is an array of objects, each representing a conversation.
-    const friendInfo = contactsList.find(friend => friend.id === currentFriend);
 
     // No friend has been selected yet.
-    if (!friendInfo) {
+    if (!currentFriend) {
         return (
             <div className="header">
                 <div className="user_image">
@@ -15,6 +13,11 @@ function ProfileFriend({currentFriend, contactsList}) {
             </div>
         );
     }
+
+    // contactsList is an array of objects, each representing a conversation.
+    const friendInfo = contactsList.find(friend => friend.id === currentFriend.id);
+
+
 
     // Display the details of the selected friend.
     return (

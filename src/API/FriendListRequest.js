@@ -2,14 +2,14 @@
 import { useEffect, useState } from 'react';
 
 // Define the FriendListRequest function. This function takes one argument: the user's token.
- function FriendListRequest() {
+ const FriendListRequest = () => {
      // get token from local storage
      const userToken = localStorage.getItem('token');
     // Initialize `loading` state variable to true. This will be used to track when we're done loading the data.
     const [loading, setLoading] = useState(true);
 
     // Initialize `friends` state variable to an empty array. This will hold the friends data once it is fetched.
-    const [friends, setFriends] = useState([]);
+    const [contacts, setContacts] = useState([]);
 
     // Use the useEffect hook to fetch the friends data when the component is mounted.
     useEffect(() => {
@@ -28,7 +28,7 @@ import { useEffect, useState } from 'react';
                 const data = await res.json();
 
                 // Update the `friends` state variable with the fetched data.
-                setFriends(data);
+                setContacts(data);
             } catch (e) {
                 // If an error occurred, log it to the console.
                 console.log(e);
@@ -42,7 +42,7 @@ import { useEffect, useState } from 'react';
     }, [userToken]); // We pass `userToken` as a dependency to useEffect, which means the effect will re-run if `userToken` changes.
 
     // Return the `loading` and `friends` state variables. These can be used by the parent component.
-    return { loading, friends };
+    return { contacts, loading };
 }
 
 export default FriendListRequest;

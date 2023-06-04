@@ -1,4 +1,4 @@
-//
+
 // async function addFriendRequest(username) {
 //     // get token from local storage
 //     const userToken = localStorage.getItem('token');

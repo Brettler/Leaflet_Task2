@@ -13,6 +13,8 @@ async function sendMessageRequest(chatId, msg) {
 
     if (response.ok) {
         const message = await response.json();
+        console.log("Respond from the server after sending the message: ", message)
+
         return message;
     } else {
         throw new Error('Failed to send message');
