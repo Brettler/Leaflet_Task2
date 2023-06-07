@@ -29,6 +29,12 @@ function ProfileFriend({currentFriend, contactsList}) {
                 {friendInfo.user.displayName}<br/>
                 <span>online</span>
             </div>
+
+            <ul className="icons">
+                <i className="bi bi-trash2 delete_chat_icon" data-toggle="tooltip" data-placement="bottom"
+                   title="Delete Chat"/>
+            </ul>
+
         </div>
     );
 }
