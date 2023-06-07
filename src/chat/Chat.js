@@ -46,6 +46,7 @@ function Chat({userData}) {
 
     const { contacts, loading} = FriendListRequest();
 
+    // const [originalContactsList, setOriginalContactsList] = useState([]);
 
 
     // Fetch friends
@@ -53,9 +54,10 @@ function Chat({userData}) {
         if (!loading) {
             setSearchResults(contacts);
             setContactsList(contacts);
+            // setOriginalContactsList(contacts); // Initialize the original contacts list
+
         }
     }, [loading, contacts]);
-
 
     // Search for a friend is case-insensitive and filters the displayed list of friends based on the prefix entered
     // in the search box.
@@ -103,7 +105,7 @@ function Chat({userData}) {
                     <ProfileUser userData={userData}
                                  setContactsList={setContactsList}/>
                     <SearchFriend doSearch={doSearch}/>
-                    <FriendListResults contactsList={searchResults}
+                    <FriendListResults contactsList={contactsList}
                                        setCurrentFriend={setCurrentFriend}/>
                 </div>
 
