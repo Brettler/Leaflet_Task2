@@ -17,7 +17,7 @@ import { useEffect, useState } from 'react';
         const fetchFriends = async () => {
             try {
                 // Fetch the data from the API endpoint.
-                const res = await fetch('http://localhost:5000/api/Chats', {
+                const res = await fetch('api/Chats', {
                     'method': 'get',
                     'headers': {
                         'Content-Type': 'application/json',

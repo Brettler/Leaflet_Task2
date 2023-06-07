@@ -70,14 +70,14 @@ function Register({ setUsersRegisterList, usersRegisterList }) {
 
         const requestBody = createRegisterRequestBody(userInfo);
         console.log("Sending request to server", requestBody);
-        const response = await fetch('http://localhost:5000/api/Users', {
+        const response = await fetch('/api/Users', {
             'method': 'post',
             'headers': {
                 'Content-Type': 'application/json',
             },
             'body': JSON.stringify(requestBody)
         });
-        console.log("Server Response", response);
+        //console.log("Server Response", response);
 
         let data = {};
 

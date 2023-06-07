@@ -15,7 +15,7 @@ function AddFriend({setContactsList}) {
         // get token from local storage
         const userToken = localStorage.getItem('token');
 
-        const response = await fetch('http://localhost:5000/api/Chats', {
+        const response = await fetch('/api/Chats', {
             'method': 'post',
             'headers': {
                 'Content-Type': 'application/json',
