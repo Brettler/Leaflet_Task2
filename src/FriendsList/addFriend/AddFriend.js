@@ -5,7 +5,7 @@ import {useState} from 'react';
 * error message will be displayed. However, if the input is valid, the friend will be added to the list on the
 * left-hand side of the page. The friend's display name and profile picture will be displayed in the appropriate list
 * item. */
-function AddFriend({userInfo, setContactsList}) {
+function AddFriend({setContactsList}) {
     const [friendUsername, setFriendUsername] = useState('');
     const [addFriendErrorMessage, setAddFriendErrorMessage] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
