@@ -2,7 +2,7 @@ import AddFriend from "../FriendsList/addFriend/AddFriend";
 
 /* These are the user options that are displayed as icons in the top left corner of the app. These options allow the
 * user to perform actions such as adding a new friend and logging out of the app. */
-function UserSettingOptions({userInfo, setContactsList, handleLogout}) {
+function UserSettingOptions({setContactsList, handleLogout}) {
 
     // User icon options.
     return (
@@ -22,9 +22,7 @@ function UserSettingOptions({userInfo, setContactsList, handleLogout}) {
                             <button type="button" className="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                         </div>
-                        <AddFriend userInfo={userInfo}
-                                   setContactsList={setContactsList}
-                        />
+                        <AddFriend setContactsList={setContactsList}/>
                     </div>
                 </div>
             </div>
