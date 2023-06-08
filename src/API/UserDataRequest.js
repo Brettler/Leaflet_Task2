@@ -11,7 +11,7 @@ function UserDataRequest({userValidInfo, setUserData, setIsLoading}) {
                 // Use a template string to insert the username into the URL.
                 console.log(userValidInfo)
                 setIsLoading(true);
-                const response = await fetch(`http://localhost:5000/api/Users/${userValidInfo}`, {
+                const response = await fetch(`api/Users/${userValidInfo}`, {
                     headers: {
                         'Content-Type': 'application/json',
                         "authorization": 'Bearer ' + userToken,

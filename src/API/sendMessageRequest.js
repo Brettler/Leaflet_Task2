@@ -2,7 +2,7 @@ async function sendMessageRequest(chatId, msg) {
     // get token from local storage
     const userToken = localStorage.getItem('token');
 
-    const response = await fetch(`http://localhost:5000/api/Chats/${chatId}/Messages`, {
+    const response = await fetch(`api/Chats/${chatId}/Messages`, {
         'method': 'post',
         'headers': {
             'Content-Type': 'application/json',
