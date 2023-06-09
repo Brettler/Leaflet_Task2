@@ -1,4 +1,4 @@
-async function sendMessageRequest(chatId, msg) {
+async function sendMessageRequest(chatId, msg, socket) {
     // get token from local storage
     const userToken = localStorage.getItem('token');
 
@@ -13,8 +13,8 @@ async function sendMessageRequest(chatId, msg) {
 
     if (response.ok) {
         const message = await response.json();
+        socket.emit("messageSent");
         console.log("Respond from the server after sending the message: ", message)
-
         return message;
     } else {
         throw new Error('Failed to send message');
