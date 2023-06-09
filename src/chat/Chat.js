@@ -8,6 +8,9 @@ import ChatWindow from '../chatWindow/ChatWindow';
 import MessageBox from '../messageBox/MessageBox';
 import FriendListRequest from "../API/FriendListRequest";
 import ChatMessagesRequest from '../API/ChatMessagesRequest'
+import io from "socket.io-client";
+
+
 /* This is where the logic for the personalized Chats page is implemented. When a user logs in, their display name and
 * profile picture are displayed in the top left bar. This bar also contains icons for adding a friend and logging out.
 * Below the bar is a search box for finding a specific chat with a friend. All the user's friends and their chats are
@@ -17,7 +20,7 @@ import ChatMessagesRequest from '../API/ChatMessagesRequest'
 * the user to type a message and send it using the button on the right. */
 function Chat({userData}) {
     const [currentFriend, setCurrentFriend] = useState(null);
-
+    const socket = io('/'); // Connect to the host that serves the page
     // Fetch friend data from server when the component mounts
     // useEffect(() => {
     //     const token = localStorage.getItem("token"); // storing the JWT token in local storage
@@ -43,9 +46,13 @@ function Chat({userData}) {
     const [chatHistory, setChatHistory] = useState([]);
     // Will hold the user list that contain in the user search.
     const [searchResults, setSearchResults] = useState([]);
+    // This boolean will be responsible to activate FriendListRequest each time a user delete a chat.
+    const [refreshNeeded, setRefreshNeeded] = useState(false);
+    const [refreshChat, setRefreshChat] = useState(false);
 
-    const { contacts, loading} = FriendListRequest();
+    const { contacts, loading} = FriendListRequest(refreshNeeded);
 
+    // const [originalContactsList, setOriginalContactsList] = useState([]);
 
 
     // Fetch friends
@@ -53,9 +60,10 @@ function Chat({userData}) {
         if (!loading) {
             setSearchResults(contacts);
             setContactsList(contacts);
+            // setOriginalContactsList(contacts); // Initialize the original contacts list
+
         }
     }, [loading, contacts]);
-
 
     // Search for a friend is case-insensitive and filters the displayed list of friends based on the prefix entered
     // in the search box.
@@ -64,7 +72,7 @@ function Chat({userData}) {
     }
 
     useEffect(() => {
-        if (currentFriend) {
+        if (currentFriend || refreshChat) {
             ChatMessagesRequest(currentFriend.id)
                 .then(messages => {
                     messages.reverse(); // reverse the array
@@ -72,12 +80,11 @@ function Chat({userData}) {
                         ...prevChatHistory,
                         [currentFriend.id]: messages
                     }));
+                    setRefreshChat(false);  // Reset the refresh flag
                 })
                 .catch(error => console.error('Failed to fetch messages:', error));
         }
-        console.log("")
-    }, [currentFriend]);
-
+    }, [currentFriend, refreshChat]);
 
 
 
@@ -92,7 +99,7 @@ function Chat({userData}) {
                 [currentFriend.id]: [...chatMessages, newMessage]
             };
         });
-
+        setRefreshNeeded(prevState => !prevState);  // Toggle refreshNeeded state -> request again the update friend list.
     };
 
     // Chat page structure.
@@ -103,15 +110,15 @@ function Chat({userData}) {
                     <ProfileUser userData={userData}
                                  setContactsList={setContactsList}/>
                     <SearchFriend doSearch={doSearch}/>
-                    <FriendListResults contactsList={searchResults}
+                    <FriendListResults contactsList={contactsList}
                                        setCurrentFriend={setCurrentFriend}/>
                 </div>
 
                 {/* Define The chat window - right side of the program */}
                 <div className="right_side">
-                    <ProfileFriend currentFriend={currentFriend} contactsList={contactsList}/>
+                    <ProfileFriend currentFriend={currentFriend} contactsList={contactsList} setRefreshNeeded={setRefreshNeeded} setCurrentFriend={setCurrentFriend}/>
                     <ChatWindow currentFriend={currentFriend} chatHistory={chatHistory}/>
-                    <MessageBox currentFriend={currentFriend} handleNewMessage={handleNewMessage}/>
+                    <MessageBox currentFriend={currentFriend} socket={socket} setRefreshNeeded={setRefreshNeeded} setRefreshChat={setRefreshChat} handleNewMessage={handleNewMessage}/>
                 </div>
             </div>
         </div>

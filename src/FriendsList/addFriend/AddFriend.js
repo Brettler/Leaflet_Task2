@@ -5,7 +5,7 @@ import {useState} from 'react';
 * error message will be displayed. However, if the input is valid, the friend will be added to the list on the
 * left-hand side of the page. The friend's display name and profile picture will be displayed in the appropriate list
 * item. */
-function AddFriend({userInfo, setContactsList}) {
+function AddFriend({setContactsList}) {
     const [friendUsername, setFriendUsername] = useState('');
     const [addFriendErrorMessage, setAddFriendErrorMessage] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,7 +15,7 @@ function AddFriend({userInfo, setContactsList}) {
         // get token from local storage
         const userToken = localStorage.getItem('token');
 
-        const response = await fetch('http://localhost:5000/api/Chats', {
+        const response = await fetch('/api/Chats', {
             'method': 'post',
             'headers': {
                 'Content-Type': 'application/json',
@@ -31,7 +31,12 @@ function AddFriend({userInfo, setContactsList}) {
             //const friendUser = addFriendAdapter(serverData);
             return friendUser;
         } else {
-            throw new Error('No user with this name exists.');
+            if (response.status === 400) {
+                const errorMessage = await response.text();
+                throw new Error(errorMessage);
+            } else {
+                throw new Error('No user with this name exists.');
+            }
         }
     }
 
@@ -68,6 +73,9 @@ function AddFriend({userInfo, setContactsList}) {
             setIsModalOpen(false);
         } catch (error) {
             setAddFriendErrorMessage(error.message);
+        } finally {
+            setFriendUsername('');
+
         }
     }
 
@@ -77,6 +85,7 @@ function AddFriend({userInfo, setContactsList}) {
     function handleFormSubmit(e) {
         e.preventDefault();
         handleAddFriend();
+
     }
 
     // Clear the modal's input box.
