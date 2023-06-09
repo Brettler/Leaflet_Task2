@@ -43,8 +43,10 @@ function Chat({userData}) {
     const [chatHistory, setChatHistory] = useState([]);
     // Will hold the user list that contain in the user search.
     const [searchResults, setSearchResults] = useState([]);
+    // This boolean will be responsible to activate FriendListRequest each time a user delete a chat.
+    const [refreshNeeded, setRefreshNeeded] = useState(false);
 
-    const { contacts, loading} = FriendListRequest();
+    const { contacts, loading} = FriendListRequest(refreshNeeded);
 
     // const [originalContactsList, setOriginalContactsList] = useState([]);
 
@@ -94,7 +96,7 @@ function Chat({userData}) {
                 [currentFriend.id]: [...chatMessages, newMessage]
             };
         });
-
+        setRefreshNeeded(prevState => !prevState);  // Toggle refreshNeeded state -> request again the update friend list.
     };
 
     // Chat page structure.
@@ -111,7 +113,7 @@ function Chat({userData}) {
 
                 {/* Define The chat window - right side of the program */}
                 <div className="right_side">
-                    <ProfileFriend currentFriend={currentFriend} contactsList={contactsList}/>
+                    <ProfileFriend currentFriend={currentFriend} contactsList={contactsList} setRefreshNeeded={setRefreshNeeded} setCurrentFriend={setCurrentFriend}/>
                     <ChatWindow currentFriend={currentFriend} chatHistory={chatHistory}/>
                     <MessageBox currentFriend={currentFriend} handleNewMessage={handleNewMessage}/>
                 </div>

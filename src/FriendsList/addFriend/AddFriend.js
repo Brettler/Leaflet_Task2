@@ -31,7 +31,12 @@ function AddFriend({setContactsList}) {
             //const friendUser = addFriendAdapter(serverData);
             return friendUser;
         } else {
-            throw new Error('No user with this name exists.');
+            if (response.status === 400) {
+                const errorMessage = await response.text();
+                throw new Error(errorMessage);
+            } else {
+                throw new Error('No user with this name exists.');
+            }
         }
     }
 
@@ -68,6 +73,9 @@ function AddFriend({setContactsList}) {
             setIsModalOpen(false);
         } catch (error) {
             setAddFriendErrorMessage(error.message);
+        } finally {
+            setFriendUsername('');
+
         }
     }
 
@@ -77,6 +85,7 @@ function AddFriend({setContactsList}) {
     function handleFormSubmit(e) {
         e.preventDefault();
         handleAddFriend();
+
     }
 
     // Clear the modal's input box.
