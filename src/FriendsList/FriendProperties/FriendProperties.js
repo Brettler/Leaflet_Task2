@@ -1,6 +1,6 @@
 /* This function populates the list of friends on the left-hand side of the screen. It displays each friend's
 * properties, including their display name, profile picture, and the time and content of the last message sent. */
-function FriendProperties({friend, setCurrentFriend}) {
+function FriendProperties({friend, setCurrentFriend, hasUnreadMessage}) {
 
     // Extracting and formatting friend properties.
     const handleClick = () => {
@@ -20,7 +20,8 @@ function FriendProperties({friend, setCurrentFriend}) {
         : "";
     // The individual friend chats structure.
     return (
-        <li className="friend_block" onClick={handleClick}>
+        // We will change the color back from red to black when a user click on the contact that sent him a message.
+        <li className={`friend_block ${hasUnreadMessage ? 'unread' : ''}`} onClick={handleClick}>
             <div className="img_friend">
                 <img src={friend.user.profilePic} className="cover" alt=""/>
             </div>

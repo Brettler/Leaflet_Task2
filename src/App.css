@@ -10,3 +10,7 @@ html, body {
 .invalid {
     border-color: red;
 }
+
+.unread {
+    color: red;
+}

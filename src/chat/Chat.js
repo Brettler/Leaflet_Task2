@@ -28,6 +28,8 @@ function Chat({userData}) {
     const [searchResults, setSearchResults] = useState([]);
     // This boolean will be responsible to activate FriendListRequest each time a user delete a chat.
     const [refreshNeeded, setRefreshNeeded] = useState(false);
+    // This will store the IDs of friends with unread messages
+    const [unreadMessages, setUnreadMessages] = useState(new Set());
 
     // Request the user friend list from the server.
     const { contacts, loading} = FriendListRequest(refreshNeeded);
@@ -46,31 +48,35 @@ function Chat({userData}) {
         setSearchResults(contactsList.filter((contact) => contact.user.displayName.toLowerCase().startsWith(q.toLowerCase())));
     }
 
+    // Refresh the contact list each time a friend send as message trought the socket.
     useEffect(() => {
         socket.on("newMessage", async (newMessage) => {
-            if (!currentFriend) {
-                await setRefreshNeeded(prevState => !prevState);
-                setContactsList(prevContactsList => [...prevContactsList]);
-                return;
+            // Check if the message is from the current friend
+            if (currentFriend && newMessage.chatId === currentFriend.id) {
+                // This is from the current friend, so update the chat history as before
+                try {
+                    const messages = await ChatMessagesRequest(currentFriend.id);
+                    messages.reverse();
+                    setChatHistory(prevChatHistory => ({
+                        ...prevChatHistory,
+                        [currentFriend.id]: messages
+                    }));
+                } catch (error) {
+                    console.error('Failed to fetch messages:', error);
+                }
+            } else {
+                // This is from a different friend, so add their ID to the set of unread messages
+                setUnreadMessages(prevUnread => new Set([...prevUnread, newMessage.chatId]));
             }
-            try {
-                const messages = await ChatMessagesRequest(currentFriend.id);
-                messages.reverse();
-                setChatHistory(prevChatHistory => ({
-                    ...prevChatHistory,
-                    [currentFriend.id]: messages
-                }));
-                await setRefreshNeeded(prevState => !prevState);
-                // Force a re-render of FriendListResults by updating contactsList with a new reference
-                setContactsList(prevContactsList => [...prevContactsList]);
-            } catch (error) {
-                console.error('Failed to fetch messages:', error);
-            }
+            await setRefreshNeeded(prevState => !prevState);
+            // Force a re-render of FriendListResults by updating contactsList with a new reference
+            setContactsList(prevContactsList => [...prevContactsList]);
         });
         return () => {
             socket.off("newMessage");
         };
-    }, [socket]);
+    }, [socket, currentFriend]);
+
 
     // This method is nessery when we first click on a friend in the chat list and we need to
     // represent all of his messages in the chat.
@@ -93,6 +99,19 @@ function Chat({userData}) {
         fetch();
     }, [currentFriend]);
 
+
+    const setCurrentFriendAndClearUnread = friend => {
+        // Clear this friend's ID from the set of unread messages
+        setUnreadMessages(prevUnread => {
+            const newUnread = new Set([...prevUnread]);
+            newUnread.delete(friend.id);
+            return newUnread;
+        });
+        setCurrentFriend(friend);
+    };
+
+
+
     // Chat page structure.
     return (
         <div id='chat' className='chatPage'>
@@ -101,8 +120,8 @@ function Chat({userData}) {
                     <ProfileUser userData={userData}
                                  setContactsList={setContactsList}/>
                     <SearchFriend doSearch={doSearch}/>
-                    <FriendListResults contactsList={contactsList}
-                                       setCurrentFriend={setCurrentFriend}/>
+                    <FriendListResults contactsList={contactsList} setCurrentFriend={setCurrentFriendAndClearUnread} unreadMessages={unreadMessages}/>
+
                 </div>
 
                 {/* Define The chat window - right side of the program */}
