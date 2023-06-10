@@ -102,7 +102,13 @@ function Register({ setUsersRegisterList, usersRegisterList }) {
             })
             setRedirectToLogin(true);
         } else {
-            setErrorMessage(data.message || 'Failed to register');
+            if (response.status === 413) {
+                setErrorMessage("Please switch profile picture, it is too large.");
+            } else if (response.status === 409) {
+                setErrorMessage("This username is already taken.");
+            } else {
+                setErrorMessage(data.message || 'Failed to register');
+            }
         }
 
 

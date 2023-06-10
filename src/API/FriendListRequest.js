@@ -39,7 +39,7 @@ import { useEffect, useState } from 'react';
         };
         // Call the fetchFriends function.
         fetchFriends();
-    }, [userToken, refreshNeeded]); // We pass `userToken` as a dependency to useEffect, which means the effect will re-run if `userToken` changes.
+    }, [refreshNeeded]); // We pass `userToken` as a dependency to useEffect, which means the effect will re-run if `userToken` changes.
 
     // Return the `loading` and `friends` state variables. These can be used by the parent component.
     return { contacts, loading };

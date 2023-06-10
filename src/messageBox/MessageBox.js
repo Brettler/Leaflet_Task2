@@ -6,7 +6,7 @@ import sendMessageRequest from "../API/sendMessageRequest";
 /* Here, the message box is managed. If the user hasn't selected a friend or hasn't entered any message, they won't be
 * able to send a message. Otherwise, the user can send a message, and it will be displayed with a timestamp indicating
 * when it was sent. */
-function MessageBox({currentFriend, socket, setRefreshNeeded, setRefreshChat, handleNewMessage}) {
+function MessageBox({currentFriend,  setRefreshNeeded}) {
 
 
     const [messageText, setMessageText] = useState('')
@@ -30,26 +30,24 @@ function MessageBox({currentFriend, socket, setRefreshNeeded, setRefreshChat, ha
     //     setMessageText('');
     // };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (!messageText || !currentFriend) {
             return;
         }
-
-        sendMessageRequest(currentFriend.id, messageText, socket)
-            .then(newMessage => {
-                handleNewMessage(newMessage);
-                setMessageText('');
-            })
-            .catch(error => console.error('Failed to send message:', error));
-
+        const newMessage = await sendMessageRequest(currentFriend.id, messageText)
+        //handleNewMessage(newMessage);
+        setRefreshNeeded(prevState => !prevState);
+        setMessageText('');
     };
-
-    useEffect(()=> {
-        socket.on("renderContactList", () => {
-            setRefreshNeeded(prevState => !prevState);  // Toggle refreshNeeded state -> request again the update friend list.
-            setRefreshChat(prevState => !prevState);  // Trigger a chat refresh
-        })
-    },[socket])
+    //
+    // useEffect(()=> {
+    //     socket.on("renderContactList", (userId) => {
+    //         if(currentFriend && currentFriend.id === userId) {
+    //             setRefreshNeeded(prevState => !prevState);
+    //             setRefreshChat(prevState => !prevState);
+    //         }
+    //     })
+    // },[socket])
 
 
     // Message box structure.
