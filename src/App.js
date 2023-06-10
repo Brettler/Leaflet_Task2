@@ -7,7 +7,6 @@ import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 //import botUsers from "./FriendsList/BotsUsers";
 import UserDataRequest from './API/UserDataRequest';
 //import FriendListRequest from "./API/FriendListRequest"; // Import the function
-
 /* This section contains the main functionality of the app, responsible for controlling the navigation between
 * different pages such as login, register, and chats. The login page is set as the initial page, allowing users to
 * switch between it and the register page. Only registered users who provide the correct login credentials are allowed
