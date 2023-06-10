@@ -1,4 +1,4 @@
-# Advanced Programmin 2 - Task 2
+# Advanced Programmin 2 - Task 2 Without Server
 Eden Berman & Liad Brettler
 
 ## Description
