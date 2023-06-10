@@ -1,4 +1,4 @@
-# Advanced Programmin 2 - Task 1 Part 2
+# Advanced Programmin 2 - Task 2
 Eden Berman & Liad Brettler
 
 ## Description
