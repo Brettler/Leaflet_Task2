@@ -10,7 +10,6 @@ function AddFriend({setContactsList}) {
     const [addFriendErrorMessage, setAddFriendErrorMessage] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-
     async function addFriendRequest(username) {
         // get token from local storage
         const userToken = localStorage.getItem('token');
@@ -26,9 +25,6 @@ function AddFriend({setContactsList}) {
 
         if (response.ok) {
             const friendUser = await response.json();
-            console.log("Reposed from the server adding a friend", friendUser)
-            // Adapt the data retrieve from the server into our variables.
-            //const friendUser = addFriendAdapter(serverData);
             return friendUser;
         } else {
             if (response.status === 400) {
@@ -48,21 +44,7 @@ function AddFriend({setContactsList}) {
             return;
         }
 
-        // old:
-        //const friendUser = usersRegisterList[friendUsername];
-
-        // If the username entered is not found in the registered users list, an error will be displayed.
-        // if (!friendUser) {
-        //     setAddFriendErrorMessage('No user with this name exists.');
-        //     return;
-        // }
-        // #################### hemi want us to allow to add the same person multyple times ######################
-        // Verify if the friend already exists in the user's list of friends.
-        // if (userInfo.friendsList.some(friend => friend.registerUsername === friendUsername)) {
-        //     setAddFriendErrorMessage('This user is already your friend.');
-
         // Add the new friend to the list of the user's friends.
-
         try {
             const friendUser = await addFriendRequest(friendUsername);
 
@@ -79,9 +61,7 @@ function AddFriend({setContactsList}) {
         }
     }
 
-
-
-            // Prevent clicking 'enter' from refreshing the page.
+    // Prevent clicking 'enter' from refreshing the page.
     function handleFormSubmit(e) {
         e.preventDefault();
         handleAddFriend();
@@ -121,7 +101,6 @@ function AddFriend({setContactsList}) {
                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal"
                         onClick={handleCloseModal}>Close</button>
                 <button type="button" form="add-friend" id="add-friend-btn" className="btn btn-success"
-                        // ################# Maybe need to swich between those 2 functions call #########
                         onClick={() => { handleAddFriend(); handleOpenModal(); }}>Add Friend</button>
             </div>
         </>

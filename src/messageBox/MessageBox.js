@@ -7,48 +7,16 @@ import sendMessageRequest from "../API/sendMessageRequest";
 * able to send a message. Otherwise, the user can send a message, and it will be displayed with a timestamp indicating
 * when it was sent. */
 function MessageBox({currentFriend,  setRefreshNeeded}) {
-
-
     const [messageText, setMessageText] = useState('')
-    //const friendInfo = userInfo.friendsList.find(friend => friend.registerUsername === currentFriend);
-
-    // Check if either the message box is empty or a friend has not been selected.
-    // const handleSubmit = () => {
-    //     if (!messageText || !friendInfo) {
-    //         return;
-    //     }
-    //     //const now = new Date();
-    //     //const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    //     const newMessage = {
-    //         sender: userInfo.registerUsername,
-    //         text: messageText,
-    //         time: new Date().toLocaleString([], {hour: '2-digit', minute: '2-digit'}),
-    //     };
-    //
-    //     // Clear the message box once a message has been sent.
-    //     handleNewMessage(newMessage);
-    //     setMessageText('');
-    // };
 
     const handleSubmit = async () => {
         if (!messageText || !currentFriend) {
             return;
         }
-        const newMessage = await sendMessageRequest(currentFriend.id, messageText)
-        //handleNewMessage(newMessage);
+        await sendMessageRequest(currentFriend.id, messageText);
         setRefreshNeeded(prevState => !prevState);
         setMessageText('');
     };
-    //
-    // useEffect(()=> {
-    //     socket.on("renderContactList", (userId) => {
-    //         if(currentFriend && currentFriend.id === userId) {
-    //             setRefreshNeeded(prevState => !prevState);
-    //             setRefreshChat(prevState => !prevState);
-    //         }
-    //     })
-    // },[socket])
-
 
     // Message box structure.
     return (

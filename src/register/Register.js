@@ -69,7 +69,6 @@ function Register({ setUsersRegisterList, usersRegisterList }) {
 
 
         const requestBody = createRegisterRequestBody(userInfo);
-        console.log("Sending request to server", requestBody);
         const response = await fetch('/api/Users', {
             'method': 'post',
             'headers': {
@@ -77,7 +76,6 @@ function Register({ setUsersRegisterList, usersRegisterList }) {
             },
             'body': JSON.stringify(requestBody)
         });
-        //console.log("Server Response", response);
 
         let data = {};
 
@@ -87,7 +85,6 @@ function Register({ setUsersRegisterList, usersRegisterList }) {
         // If the reposnse is only feedback with numbers, ' data = await response.json()' will give us error.
         try {
             data = await response.json();
-            console.log("Server Response Body", data);
         } catch (err) {
             console.error("Failed to parse response body", err);
         }
