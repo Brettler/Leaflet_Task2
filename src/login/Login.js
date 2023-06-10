@@ -18,20 +18,11 @@ function Login({setUserValidInfo, setUserToken}) {
     // Verify whether the entered username and password correspond with each other.
     const loginUser = async (e) => {
         e.preventDefault();
-        /* THIS LOGIC IS CLIENT SIDE. WE WILL NEED TO MOVE IT TO THE SERVER SIDE WHEN HE BUILD IT. */
-        // const user = usersRegisterList[loginUsername]
-        // if (user && user.registerPassword === loginPassword) {
-        //     setUserValidInfo(user.registerUsername);
-        //     setRedirectToChat(true);
-        // } else {
-        //     setErrorMessage(true);
-        // }
+
         const userCredentials = {
             username: loginUsername,
             password: loginPassword,
         };
-
-        console.log("Sending to server: ", userCredentials);
 
         const response = await fetch("/api/Tokens", {
             'method': "post",
@@ -41,9 +32,8 @@ function Login({setUserValidInfo, setUserToken}) {
 
         if (response.ok) {
             const tokenJWT = await response.text();
-            console.log("Received from server: ", tokenJWT);
-
             localStorage.setItem("token", tokenJWT);
+
             setUserValidInfo(loginUsername);
             setUserToken(tokenJWT)
             setRedirectToChat(true);
