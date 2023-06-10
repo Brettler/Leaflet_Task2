@@ -28,7 +28,6 @@ async function deleteChat(chatId) {
         } else {
             throw new Error('Failed to delete chat');
         }
-
     } catch (error) {
         console.error('Error deleting chat: ', error);
         throw error;
@@ -50,7 +49,6 @@ function ProfileFriend({currentFriend, contactsList, setRefreshNeeded, setCurren
     const [chatDeleted, setChatDeleted] = useState(false);
     useEffect(() => {
         if (contactsList.length > 0) {
-            console.log("contact list length is:", contactsList.length)
             setIsEmptyContactList(false);
         } else {
             setIsEmptyContactList(true);

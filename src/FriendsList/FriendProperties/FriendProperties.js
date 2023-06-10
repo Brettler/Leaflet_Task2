@@ -5,13 +5,12 @@ function FriendProperties({friend, setCurrentFriend}) {
     // Extracting and formatting friend properties.
     const handleClick = () => {
         setCurrentFriend(friend);
-        console.log("We set the current friend: ", friend)
     };
     // const friendInfo = userInfo.friendsInfo[friend.registerUsername];
     // Shorten the display of the last message to fit in the 'friend block'.
     const lastMessage = friend.lastMessage
-        ? (friend.lastMessage.content.length > 10
-            ? friend.lastMessage.content.slice(0, 10) + "..."
+        ? (friend.lastMessage.content.length > 15
+            ? friend.lastMessage.content.slice(0, 15) + "..."
             : friend.lastMessage.content)
         : "";
     const lastMessageTime = friend.lastMessage

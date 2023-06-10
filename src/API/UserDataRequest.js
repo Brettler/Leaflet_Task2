@@ -9,7 +9,6 @@ function UserDataRequest({userValidInfo, setUserData, setIsLoading}) {
             const fetchData = async () => {
                 try {
                     // Use a template string to insert the username into the URL.
-                    console.log(userValidInfo)
                     setIsLoading(true);
                     const response = await fetch(`api/Users/${userValidInfo}`, {
                         headers: {
@@ -17,14 +16,11 @@ function UserDataRequest({userValidInfo, setUserData, setIsLoading}) {
                             "authorization": 'Bearer ' + userToken,
                         },
                     });
-
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
                     }
-
                     const userInformation = await response.json();
                     setUserData(userInformation);
-                    console.log(userInformation);
                     setIsLoading(false);
 
                 } catch (error) {
@@ -32,7 +28,6 @@ function UserDataRequest({userValidInfo, setUserData, setIsLoading}) {
                     setIsLoading(false);
                 }
             };
-
             fetchData();
         }
 

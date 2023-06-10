@@ -12,7 +12,6 @@ async function ChatMessagesRequest(chatId) {
 
     if (response.ok) {
         const messages = await response.json();
-        console.log("Respond from the server after sending the messages: ", messages)
         return messages;
     } else {
         throw new Error('Failed to fetch messages');
