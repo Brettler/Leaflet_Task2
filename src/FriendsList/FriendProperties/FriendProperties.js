@@ -10,8 +10,8 @@ function FriendProperties({friend, setCurrentFriend}) {
     // const friendInfo = userInfo.friendsInfo[friend.registerUsername];
     // Shorten the display of the last message to fit in the 'friend block'.
     const lastMessage = friend.lastMessage
-        ? (friend.lastMessage.content.length > 32
-            ? friend.lastMessage.content.slice(0, 32) + "..."
+        ? (friend.lastMessage.content.length > 10
+            ? friend.lastMessage.content.slice(0, 10) + "..."
             : friend.lastMessage.content)
         : "";
     const lastMessageTime = friend.lastMessage

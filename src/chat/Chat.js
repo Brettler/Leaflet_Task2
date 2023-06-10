@@ -8,6 +8,10 @@ import ChatWindow from '../chatWindow/ChatWindow';
 import MessageBox from '../messageBox/MessageBox';
 import FriendListRequest from "../API/FriendListRequest";
 import ChatMessagesRequest from '../API/ChatMessagesRequest'
+import io from "socket.io-client";
+
+
+
 /* This is where the logic for the personalized Chats page is implemented. When a user logs in, their display name and
 * profile picture are displayed in the top left bar. This bar also contains icons for adding a friend and logging out.
 * Below the bar is a search box for finding a specific chat with a friend. All the user's friends and their chats are
@@ -17,45 +21,24 @@ import ChatMessagesRequest from '../API/ChatMessagesRequest'
 * the user to type a message and send it using the button on the right. */
 function Chat({userData}) {
     const [currentFriend, setCurrentFriend] = useState(null);
-
-    // Fetch friend data from server when the component mounts
-    // useEffect(() => {
-    //     const token = localStorage.getItem("token"); // storing the JWT token in local storage
-    //     if (token) {
-    //         FriendListRequest.then(data => {
-    //             // Transform the server response to fit the current system
-    //             const AdapterFriendsInformation = data.map(friend => ({
-    //                 registerUsername: friend.user.username,
-    //                 registerDisplayName: friend.user.displayName,
-    //                 registerImage: friend.user.profilePic,
-    //                 last_msg: friend.lastMessage.content,
-    //                 day_time: new Date(friend.lastMessage.created).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
-    //             }));
-    //             setContactList(AdapterFriendsInformation);
-    //         });
-    //     }
-    // }, []);
-
-
+    const socket = io('/'); // Connect to the host that serves the page
     // Update the user's friend list based on the friends they add.
     const [contactsList, setContactsList] = useState([]);
     // Create array that will hold all the chats between the user and his contacts.
     const [chatHistory, setChatHistory] = useState([]);
     // Will hold the user list that contain in the user search.
     const [searchResults, setSearchResults] = useState([]);
+    // This boolean will be responsible to activate FriendListRequest each time a user delete a chat.
+    const [refreshNeeded, setRefreshNeeded] = useState(false);
+    const [refreshChat, setRefreshChat] = useState(false);
 
-    const { contacts, loading} = FriendListRequest();
-
-    // const [originalContactsList, setOriginalContactsList] = useState([]);
-
+    const { contacts, loading} = FriendListRequest(refreshNeeded);
 
     // Fetch friends
     useEffect(() => {
         if (!loading) {
             setSearchResults(contacts);
             setContactsList(contacts);
-            // setOriginalContactsList(contacts); // Initialize the original contacts list
-
         }
     }, [loading, contacts]);
 
@@ -66,36 +49,63 @@ function Chat({userData}) {
     }
 
     useEffect(() => {
-        if (currentFriend) {
-            ChatMessagesRequest(currentFriend.id)
-                .then(messages => {
-                    messages.reverse(); // reverse the array
-                    setChatHistory(prevChatHistory => ({
-                        ...prevChatHistory,
-                        [currentFriend.id]: messages
-                    }));
-                })
-                .catch(error => console.error('Failed to fetch messages:', error));
-        }
-        console.log("")
-    }, [currentFriend]);
-
-
-
-
-
-    // Handles the functionality of sending messages in a chat. It displays the text of the message and the time it
-    // was sent. Additionally, it manages the chat history so that messages are displayed in chronological order.
-    const handleNewMessage = (newMessage) => {
-        setChatHistory(prevChatHistory => {
-            const chatMessages = prevChatHistory[currentFriend.id] || [];
-            return {
-                ...prevChatHistory,
-                [currentFriend.id]: [...chatMessages, newMessage]
-            };
+        console.log("Establishing socket connection...");
+        socket.on("newMessage", async (newMessage) => {
+            console.log("Received newMessage event from server: ", newMessage);
+            if (!currentFriend) {
+                await setRefreshNeeded(prevState => !prevState);
+                // Force a re-render of FriendListResults by updating contactsList with a new reference
+                setContactsList(prevContactsList => [...prevContactsList]);
+                console.log("currentFriend object is null or undefined");
+                return;
+            }
+            try {
+                console.log("Fetching messages for currentFriend id: ", currentFriend.id);
+                const messages = await ChatMessagesRequest(currentFriend.id);
+                messages.reverse();
+                setChatHistory(prevChatHistory => ({
+                    ...prevChatHistory,
+                    [currentFriend.id]: messages
+                }));
+                await setRefreshNeeded(prevState => !prevState);
+                // Force a re-render of FriendListResults by updating contactsList with a new reference
+                setContactsList(prevContactsList => [...prevContactsList]);
+                // Update the last message for other friends
+                console.log("saved message in the client is: ", newMessage.message.content)
+            } catch (error) {
+                console.error('Failed to fetch messages:', error);
+            }
         });
 
-    };
+        return () => {
+            socket.off("newMessage");
+        };
+    }, [socket]);
+
+    // This method is nessery when we first click on a friend in the chat list and we need to
+    // represent all of his messages in the chat.
+    useEffect(() => {
+        console.log("We here refresh just when current friend is changing.");
+        if (!currentFriend) {
+            console.log("currentFriend object is null or undefined");
+            return;
+        }
+        console.log("Fetching messages for currentFriend id: ", currentFriend.id);
+
+        const fetch = async() => {
+            try {
+                const messages = await ChatMessagesRequest(currentFriend.id);
+                messages.reverse();
+                setChatHistory(prevChatHistory => ({
+                    ...prevChatHistory,
+                    [currentFriend.id]: messages
+                }));
+            } catch (error) {
+                console.error("Failed to fetch messages:", error);
+            }
+        }
+        fetch();
+    }, [currentFriend]);
 
     // Chat page structure.
     return (
@@ -111,9 +121,9 @@ function Chat({userData}) {
 
                 {/* Define The chat window - right side of the program */}
                 <div className="right_side">
-                    <ProfileFriend currentFriend={currentFriend} contactsList={contactsList}/>
+                    <ProfileFriend currentFriend={currentFriend} contactsList={contactsList} setRefreshNeeded={setRefreshNeeded} setCurrentFriend={setCurrentFriend}/>
                     <ChatWindow currentFriend={currentFriend} chatHistory={chatHistory}/>
-                    <MessageBox currentFriend={currentFriend} handleNewMessage={handleNewMessage}/>
+                    <MessageBox currentFriend={currentFriend}  setRefreshNeeded={setRefreshNeeded}/>
                 </div>
             </div>
         </div>

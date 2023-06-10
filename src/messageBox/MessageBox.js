@@ -1,11 +1,14 @@
 import MessageIcons from "../messageIcons/MessageIcons";
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import sendMessageRequest from "../API/sendMessageRequest";
+
 
 /* Here, the message box is managed. If the user hasn't selected a friend or hasn't entered any message, they won't be
 * able to send a message. Otherwise, the user can send a message, and it will be displayed with a timestamp indicating
 * when it was sent. */
-function MessageBox({currentFriend, handleNewMessage}) {
+function MessageBox({currentFriend,  setRefreshNeeded}) {
+
+
     const [messageText, setMessageText] = useState('')
     //const friendInfo = userInfo.friendsList.find(friend => friend.registerUsername === currentFriend);
 
@@ -27,19 +30,24 @@ function MessageBox({currentFriend, handleNewMessage}) {
     //     setMessageText('');
     // };
 
-    // In your MessageBox component:
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (!messageText || !currentFriend) {
             return;
         }
-
-        sendMessageRequest(currentFriend.id, messageText)
-            .then(newMessage => {
-                handleNewMessage(newMessage);
-                setMessageText('');
-            })
-            .catch(error => console.error('Failed to send message:', error));
+        const newMessage = await sendMessageRequest(currentFriend.id, messageText)
+        //handleNewMessage(newMessage);
+        setRefreshNeeded(prevState => !prevState);
+        setMessageText('');
     };
+    //
+    // useEffect(()=> {
+    //     socket.on("renderContactList", (userId) => {
+    //         if(currentFriend && currentFriend.id === userId) {
+    //             setRefreshNeeded(prevState => !prevState);
+    //             setRefreshChat(prevState => !prevState);
+    //         }
+    //     })
+    // },[socket])
 
 
     // Message box structure.

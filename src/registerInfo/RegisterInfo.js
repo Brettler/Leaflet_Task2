@@ -21,7 +21,7 @@ function RegisterInfo({   usernameRef, passwordRef, verifyPasswordRef, displayNa
             (username) => username.toLowerCase().replace(/\s/g, '') === value.toLowerCase().replace(/\s/g, '')
         );
         if (userExists) {
-            setUsernameErrorMsg("This username is already taken");
+            setUsernameErrorMsg("You have already created an account with this username.");
         } else {
             setUsernameErrorMsg("");
         }

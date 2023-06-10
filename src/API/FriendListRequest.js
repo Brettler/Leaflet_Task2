@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 
 // Define the FriendListRequest function. This function takes one argument: the user's token.
- const FriendListRequest = () => {
+ const FriendListRequest = (refreshNeeded) => {
      // get token from local storage
      const userToken = localStorage.getItem('token');
     // Initialize `loading` state variable to true. This will be used to track when we're done loading the data.
@@ -17,7 +17,7 @@ import { useEffect, useState } from 'react';
         const fetchFriends = async () => {
             try {
                 // Fetch the data from the API endpoint.
-                const res = await fetch('http://localhost:5000/api/Chats', {
+                const res = await fetch('api/Chats', {
                     'method': 'get',
                     'headers': {
                         'Content-Type': 'application/json',
@@ -39,7 +39,7 @@ import { useEffect, useState } from 'react';
         };
         // Call the fetchFriends function.
         fetchFriends();
-    }, [userToken]); // We pass `userToken` as a dependency to useEffect, which means the effect will re-run if `userToken` changes.
+    }, [refreshNeeded]); // We pass `userToken` as a dependency to useEffect, which means the effect will re-run if `userToken` changes.
 
     // Return the `loading` and `friends` state variables. These can be used by the parent component.
     return { contacts, loading };

@@ -33,7 +33,7 @@ function Login({setUserValidInfo, setUserToken}) {
 
         console.log("Sending to server: ", userCredentials);
 
-        const response = await fetch("http://localhost:5000/api/Tokens", {
+        const response = await fetch("/api/Tokens", {
             'method': "post",
             'headers': { "Content-Type": "application/json" },
             'body': JSON.stringify(userCredentials)

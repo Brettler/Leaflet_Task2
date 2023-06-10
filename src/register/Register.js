@@ -70,14 +70,14 @@ function Register({ setUsersRegisterList, usersRegisterList }) {
 
         const requestBody = createRegisterRequestBody(userInfo);
         console.log("Sending request to server", requestBody);
-        const response = await fetch('http://localhost:5000/api/Users', {
+        const response = await fetch('/api/Users', {
             'method': 'post',
             'headers': {
                 'Content-Type': 'application/json',
             },
             'body': JSON.stringify(requestBody)
         });
-        console.log("Server Response", response);
+        //console.log("Server Response", response);
 
         let data = {};
 
@@ -102,7 +102,13 @@ function Register({ setUsersRegisterList, usersRegisterList }) {
             })
             setRedirectToLogin(true);
         } else {
-            setErrorMessage(data.message || 'Failed to register');
+            if (response.status === 413) {
+                setErrorMessage("Please switch profile picture, it is too large.");
+            } else if (response.status === 409) {
+                setErrorMessage("This username is already taken.");
+            } else {
+                setErrorMessage(data.message || 'Failed to register');
+            }
         }
 
 
