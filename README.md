@@ -1,4 +1,4 @@
-# Advanced Programmin 2 - Task 2 Without Server
+# Leaflet Without Server
 Eden Berman & Liad Brettler
 
 ## Description
