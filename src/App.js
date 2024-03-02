@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import './App.css';
 import Chat from './chat/Chat';
 import Login from './login/Login';
@@ -6,6 +6,8 @@ import Register from './register/Register';
 import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 //import botUsers from "./FriendsList/BotsUsers";
 import UserDataRequest from './API/UserDataRequest';
+import LoadingAnimation from './LoadingAnimation/LoadingAnimation'
+import useUserDataRequest from './API/customHooks/useUserDataRequest';
 //import FriendListRequest from "./API/FriendListRequest"; // Import the function
 /* This section contains the main functionality of the app, responsible for controlling the navigation between
 * different pages such as login, register, and chats. The login page is set as the initial page, allowing users to
@@ -17,7 +19,7 @@ function App() {
     const [userData, setUserData] = useState(null);
     const [userToken, setUserToken] = useState(null);
     // 'userValidInfo' is the unique 'id' .
-    const [userValidInfo, setUserValidInfo] = useState(null);
+    const [usernameValidInfo, setUsernameValidInfo] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
 
@@ -31,29 +33,35 @@ function App() {
     //     )
     // );
 
-    // Render the personal chat page only if the user is authenticated.
 
+    // Render the personal chat page only if the user is authenticated.
     const renderChat = () => {
         if (isLoading) {
-            return <div>Loading...</div>;  // Return a loading message or spinner
-        } else if (userValidInfo) {
+            return <div>Loading </div>;
+        } else if (usernameValidInfo) {
             return <Chat userData={userData}/>;
         } else {
             return <Navigate to="/"/>;
         }
     };
 
-    const [ usersRegisterList, setUsersRegisterList] = useState([])
+   const [ usersRegisterList, setUsersRegisterList] = useState([])
+
+    // Use the custom hook to fetch user data
+    //useUserDataRequest(usernameValidInfo, setUserData, setIsLoading);
+
     // The routing logic between pages.
     return (
         <BrowserRouter>
-            <UserDataRequest userValidInfo={userValidInfo} setUserData={setUserData} setIsLoading={setIsLoading}/>
+            <LoadingAnimation/>
+            <UserDataRequest userValidInfo={usernameValidInfo} setUserData={setUserData} setIsLoading={setIsLoading}/>
             <Routes>
                 <Route path="/chat" element={renderChat()}/>
+                {/* <Route path="/chat" element={<LoadingAnimation usernameValidInfo={usernameValidInfo}/>}/> */}
                 <Route path="/register" element={<Register setUsersRegisterList={setUsersRegisterList}
                                                            usersRegisterList={usersRegisterList}/>}/>
                 <Route path="/"
-                       element={<Login setUserValidInfo={setUserValidInfo} setUserToken={setUserToken}/>}/>
+                       element={<Login setUsernameValidInfo={setUsernameValidInfo} setUserToken={setUserToken}/>}/>
             </Routes>
         </BrowserRouter>
     );

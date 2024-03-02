@@ -8,7 +8,9 @@ import ChatWindow from '../chatWindow/ChatWindow';
 import MessageBox from '../messageBox/MessageBox';
 import FriendListRequest from "../API/FriendListRequest";
 import ChatMessagesRequest from '../API/ChatMessagesRequest'
-import io from "socket.io-client";
+//import io from "socket.io-client";
+import {socket} from '../utils/socket'
+import LoadingAnimation from '../LoadingAnimation/LoadingAnimation';
 
 /* This is where the logic for the personalized Chats page is implemented. When a user logs in, their display name and
 * profile picture are displayed in the top left bar. This bar also contains icons for adding a friend and logging out.
@@ -17,9 +19,11 @@ import io from "socket.io-client";
 * By clicking on a chat, the friend's display name and profile picture are displayed on the top right bar. Below this
 * bar is the chats window where the user can see the ongoing conversation. A text box is located beneath the window for
 * the user to type a message and send it using the button on the right. */
-function Chat({userData}) {
+function Chat({userData}){
+
+
+    //const socket = io('/'); // Connect to the host that serves the page
     const [currentFriend, setCurrentFriend] = useState(null);
-    const socket = io('/'); // Connect to the host that serves the page
     // Update the user's friend list based on the friends they add.
     const [contactsList, setContactsList] = useState([]);
     // Create array that will hold all the chats between the user and his contacts.
@@ -33,7 +37,7 @@ function Chat({userData}) {
 
     // Request the user friend list from the server.
     const { contacts, loading} = FriendListRequest(refreshNeeded);
-
+    
     // Fetch friends
     useEffect(() => {
         if (!loading) {
@@ -50,6 +54,12 @@ function Chat({userData}) {
 
     // Refresh the contact list each time a friend send as message trought the socket.
     useEffect(() => {
+
+        socket.on("connect_error", () => {
+            console.error("socket error!, closing socket.");
+            socket.close();
+          });
+
         socket.on("newMessage", async (newMessage) => {
             // Check if the message is from the current friend
             if (currentFriend && newMessage.chatId === currentFriend.id) {
@@ -75,7 +85,7 @@ function Chat({userData}) {
         return () => {
             socket.off("newMessage");
         };
-    }, [socket, currentFriend]);
+    }, [currentFriend]);
 
 
     // This method is nessery when we first click on a friend in the chat list and we need to
@@ -114,24 +124,27 @@ function Chat({userData}) {
 
     // Chat page structure.
     return (
-        <div id='chat' className='chatPage'>
-            <div className="container col-12">
-                <div className="left_side">
-                    <ProfileUser userData={userData}
-                                 setContactsList={setContactsList}/>
-                    <SearchFriend doSearch={doSearch}/>
-                    <FriendListResults contactsList={contactsList} setCurrentFriend={setCurrentFriendAndClearUnread} unreadMessages={unreadMessages}/>
+        <>
+            <LoadingAnimation/>
+            <div id='chat' className='chatPage'>
+                <div className="container col-12">
+                    <div className="left_side">
+                        <ProfileUser userData={userData}
+                                    setContactsList={setContactsList}/>
+                        <SearchFriend doSearch={doSearch}/>
+                        <FriendListResults contactsList={contactsList} setCurrentFriend={setCurrentFriendAndClearUnread} unreadMessages={unreadMessages}/>
 
-                </div>
+                    </div>
 
-                {/* Define The chat window - right side of the program */}
-                <div className="right_side">
-                    <ProfileFriend currentFriend={currentFriend} contactsList={contactsList} setRefreshNeeded={setRefreshNeeded} setCurrentFriend={setCurrentFriend}/>
-                    <ChatWindow currentFriend={currentFriend} chatHistory={chatHistory}/>
-                    <MessageBox currentFriend={currentFriend}  setRefreshNeeded={setRefreshNeeded}/>
+                    {/* Define The chat window - right side of the program */}
+                    <div className="right_side">
+                        <ProfileFriend currentFriend={currentFriend} contactsList={contactsList} setRefreshNeeded={setRefreshNeeded} setCurrentFriend={setCurrentFriend}/>
+                        <ChatWindow currentFriend={currentFriend} chatHistory={chatHistory}/>
+                        <MessageBox currentFriend={currentFriend}  setRefreshNeeded={setRefreshNeeded}/>
+                    </div>
                 </div>
-            </div>
         </div>
+        </>
     );
 }
 

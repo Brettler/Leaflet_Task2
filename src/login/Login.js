@@ -9,7 +9,7 @@ import './login.css'
 * username and password, clicking on the login button will take them to their chat page. If the username or password
 * is invalid, an error message will be displayed. In case the user is not yet registered, they can click on the register
 * button to create a new account. */
-function Login({setUserValidInfo, setUserToken}) {
+function Login({setUsernameValidInfo, setUserToken}) {
     const [loginUsername, setLoginUsername] = useState("");
     const [loginPassword, setLoginPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState(false);
@@ -34,7 +34,7 @@ function Login({setUserValidInfo, setUserToken}) {
             const tokenJWT = await response.text();
             localStorage.setItem("token", tokenJWT);
 
-            setUserValidInfo(loginUsername);
+            setUsernameValidInfo(loginUsername);
             setUserToken(tokenJWT)
             setRedirectToChat(true);
         } else {
