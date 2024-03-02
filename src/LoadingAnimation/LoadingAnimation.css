@@ -1,0 +1,56 @@
+
+.HomePageLoader {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    position: fixed; /* Don't let the user scroll in this screen */
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    top: 0; /* Will be changed to -100vh to remove the loader screen */
+    z-index: 100000; /* Should be cover everything in the website. */
+    background: url("leafsLoading.jpg");
+    color: white;
+    transition: 1s; /* The time the screen moves to the main homepage screen*/
+}
+
+.HomePageLoader.LoaderTextContainer {
+    display: flex;
+    text-align: center;
+    justify-content: space-between;
+}
+
+.titleIntro {
+    font-family: 'Ubuntu', sans-serif; /* Taken from google */
+    position: relative;
+    display: flex;
+    margin-bottom: 1vh;
+    font-size: 8rem;
+    bottom: -50px;
+    opacity: 0;
+}
+
+.titleIntro.activeAnimation {
+    bottom: 0;
+    opacity: 1;
+    transition: ease-in-out 0.5s;
+}
+
+.titleIntro.fadeAnimation {
+    bottom: 50vh;
+    opacity: 0;
+    transition: ease-in-out 0.5s;
+    
+}
+
+/* Phone Settings */
+@media (max-width: 500px) {
+    .HomePageLoader {
+        align-items: flex-start;
+        padding-top: 35vh;
+    }
+
+    .titleIntro {
+        font-size: 2rem;
+    }
+}

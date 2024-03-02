@@ -122,10 +122,10 @@ function ProfileFriend({currentFriend, contactsList, setRefreshNeeded, setCurren
                 <span>online</span>
             </div>
 
-            <ul className="icons">
+            {/* <ul className="icons">
                 <i className="bi bi-trash2 delete_chat_icon" data-toggle="tooltip" data-placement="bottom"
                    title="Delete Chat" onClick={handleDeleteChat}/>
-            </ul>
+            </ul> */}
 
         </div>
     );
