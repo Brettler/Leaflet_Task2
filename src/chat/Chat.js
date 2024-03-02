@@ -124,8 +124,6 @@ function Chat({userData}){
 
     // Chat page structure.
     return (
-        <>
-            <LoadingAnimation/>
             <div id='chat' className='chatPage'>
                 <div className="container col-12">
                     <div className="left_side">
@@ -144,7 +142,6 @@ function Chat({userData}){
                     </div>
                 </div>
         </div>
-        </>
     );
 }
 

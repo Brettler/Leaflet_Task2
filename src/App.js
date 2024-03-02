@@ -47,13 +47,9 @@ function App() {
 
    const [ usersRegisterList, setUsersRegisterList] = useState([])
 
-    // Use the custom hook to fetch user data
-    //useUserDataRequest(usernameValidInfo, setUserData, setIsLoading);
-
     // The routing logic between pages.
     return (
         <BrowserRouter>
-            <LoadingAnimation/>
             <UserDataRequest userValidInfo={usernameValidInfo} setUserData={setUserData} setIsLoading={setIsLoading}/>
             <Routes>
                 <Route path="/chat" element={renderChat()}/>
